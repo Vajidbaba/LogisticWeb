@@ -7,34 +7,23 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/App.Admin.Web.styles.css" asp-append-version="true" />
-    <!--Css Here-->
     @await Html.PartialAsync("_Css")
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
-    <!--Left Nave here-->
     @await Html.PartialAsync("_LeftNav")
-
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-        <!-- Header Here -->
         @await Html.PartialAsync("_Header")
-
-
         <div class="container-fluid py-4">
             <main role="main" class="pb-3">
                 @RenderBody()
             </main>
         </div>
     </main>
-
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
-    <!--Js Here-->
     @await Html.PartialAsync("_Js")
-
 </body>
-
 </html>
