@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<Common.Data.Models.Employee>
+
+@{
     ViewData["Title"] = "Dashboard";
 }
 <h6 class="font-weight-bolder va-title text-primary">Dashboard</h6>
@@ -92,6 +94,7 @@
     </div>
 </div>
 
+
 <div class="pt-3">
     <div class="row">
         <div class="col-12">
@@ -114,74 +117,40 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <p class="text-xs ps-3 font-weight-bold mb-0">1</p>
-                                    </td>
-                                    <td>
-                                        <h6 class="mb-0 text-sm">John Michael</h6>
-                                    </td>
-                                    <td>
-                                        <p class="text-xs font-weight-bold mb-0">test@test.com</p>
-                                    </td>
-                                    <td class="align-middle text-center text-sm">
-                                        <span class="badge badge-sm bg-gradient-success">Active</span>
-                                    </td>
-                                    <td class="align-middle text-center">
-                                        <span class="text-secondary text-xs font-weight-bold">123456</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p class="text-xs ps-3 font-weight-bold mb-0">2</p>
-                                    </td>
-                                    <td>
-                                        <h6 class="mb-0 text-sm">John Michael</h6>
-                                    </td>
-                                    <td>
-                                        <p class="text-xs font-weight-bold mb-0">test@test.com</p>
-                                    </td>
-                                    <td class="align-middle text-center text-sm">
-                                        <span class="badge badge-sm bg-gradient-success">Active</span>
-                                    </td>
-                                    <td class="align-middle text-center">
-                                        <span class="text-secondary text-xs font-weight-bold">123456</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p class="text-xs ps-3 font-weight-bold mb-0">3</p>
-                                    </td>
-                                    <td>
-                                        <h6 class="mb-0 text-sm">John Michael</h6>
-                                    </td>
-                                    <td>
-                                        <p class="text-xs font-weight-bold mb-0">test@test.com</p>
-                                    </td>
-                                    <td class="align-middle text-center text-sm">
-                                        <span class="badge badge-sm bg-gradient-success">Active</span>
-                                    </td>
-                                    <td class="align-middle text-center">
-                                        <span class="text-secondary text-xs font-weight-bold">123456</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p class="text-xs ps-3 font-weight-bold mb-0">4</p>
-                                    </td>
-                                    <td>
-                                        <h6 class="mb-0 text-sm">John Michael</h6>
-                                    </td>
-                                    <td>
-                                        <p class="text-xs font-weight-bold mb-0">test@test.com</p>
-                                    </td>
-                                    <td class="align-middle text-center text-sm">
-                                        <span class="badge badge-sm bg-gradient-success">Active</span>
-                                    </td>
-                                    <td class="align-middle text-center">
-                                        <span class="text-secondary text-xs font-weight-bold">123456</span>
-                                    </td>
-                                </tr>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            <p class="text-xs ps-3 font-weight-bold mb-0">
+                                                @Html.DisplayFor(modelItem => item.IdEmployee)
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <h6 class="mb-0 text-sm">
+                                                @Html.DisplayFor(modelItem => item.Name)
+
+                                            </h6>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">
+                                                @Html.DisplayFor(modelItem => item.Email)
+
+                                            </p>
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            <span class="badge badge-sm bg-gradient-success">
+                                                @Html.DisplayFor(modelItem => item.Address)
+
+                                            </span>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <span class="text-secondary text-xs font-weight-bold">
+                                                @Html.DisplayFor(modelItem => item.Phone)
+
+                                            </span>
+                                        </td>
+                                    </tr>
+                                }
 
 
                             </tbody>

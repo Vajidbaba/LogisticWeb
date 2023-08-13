@@ -1,4 +1,19 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Common.Data.Context;
+using Common.Core.Services.Contracts;
+using Common.Core.Services;
+using Common.Data.Repositories.Contracts;
+using Common.Data.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<LogisticContext>(options => {
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Sql"));
+});
+
+builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
