@@ -7,9 +7,13 @@ using Common.Data.Models;
 
 namespace Common.Core.Services.Contracts
 {
-    public interface IEmployeeService
+    public interface IUsersService
     {
-        Task<List<Employee>> GetEmployees();
+        Task<List<Users>> GetAllUsers();
+        Users CreateNewUser(Users users);
+        Users GetUsersDetails(int? Id);
+        Users UpdatePerson(Users users);
+
 
     }
 }

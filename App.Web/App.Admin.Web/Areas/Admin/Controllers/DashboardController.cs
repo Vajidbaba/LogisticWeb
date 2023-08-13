@@ -11,7 +11,7 @@ namespace App.Admin.Web.Areas.Admin.Controllers
 
     public class DashboardController : Controller
     {
-    private readonly IEmployeeService _employeeService;
+        private readonly IEmployeeService _employeeService;
         public DashboardController(IEmployeeService employeeService)
         {
             _employeeService = employeeService;
@@ -21,10 +21,5 @@ namespace App.Admin.Web.Areas.Admin.Controllers
             List<Employee> listEmployees = await _employeeService.GetEmployees();
             return View(listEmployees);
         }
-
-        //public IActionResult List()
-        //{
-        //    return View();
-        //}
     }
 }

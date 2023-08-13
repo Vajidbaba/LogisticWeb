@@ -12,13 +12,13 @@ namespace Common.Data.Context
         {
         }
 
-        public LogisticContext(DbContextOptions<LogisticContext> options)
-            : base(options)
+        public LogisticContext(DbContextOptions<LogisticContext> options) : base(options)
         {
         }
 
         public virtual DbSet<Employee> Employees { get; set; } = null!;
-        public virtual DbSet<User> Users { get; set; } = null!;
+        public virtual DbSet<Users> Users { get; set; } = null!;
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -53,9 +53,12 @@ namespace Common.Data.Context
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<User>(entity =>
+            modelBuilder.Entity<Users>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.Id)
+                   .HasName("PK__Users__51C8DD7A4AF709B1");
+
+                entity.ToTable("Users");
 
                 entity.Property(e => e.Password)
                     .HasMaxLength(25)
@@ -65,9 +68,7 @@ namespace Common.Data.Context
                     .HasMaxLength(20)
                     .HasColumnName("role");
 
-                entity.Property(e => e.UserName)
-                    .HasMaxLength(20)
-                    .HasColumnName("userName");
+            
             });
 
             OnModelCreatingPartial(modelBuilder);

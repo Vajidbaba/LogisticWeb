@@ -10,10 +10,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<LogisticContext>(options => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("Sql"));
+    options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 });
 
 builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<IUsersService, UsresService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

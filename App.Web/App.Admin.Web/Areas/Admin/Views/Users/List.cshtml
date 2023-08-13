@@ -1,0 +1,119 @@
+﻿@model IEnumerable<Common.Data.Models.Users>
+
+@{
+    ViewData["Title"] = "Users";
+}
+<h6 class="font-weight-bolder va-title text-primary">Users</h6>
+
+<div class="row">
+    <div class="col-12 ">
+        <a href="~/Admin/users/add" class="btn btn-sm bg-primary text-white">
+            <i class="fa fa-plus me-2 text-xs"></i>
+            Add New User
+        </a>
+    </div>
+</div>
+
+<div class="pt-3">
+    <div class="row">
+        <div class="col-12">
+            <div class="card m-0">
+                <div class="card-header p-3">
+                    <h6>Users List</h6>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive p-2" style="height:340px;overflow:auto">
+                        <table class="table align-items-center mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="text-xs font-weight-bolder ps-2 text-primary">Id</th>
+                                    <th class="text-xs font-weight-bolder ps-2 text-primary">Full Name</th>
+                                    <th class="text-xs font-weight-bolder ps-2 text-primary">Email</th>
+                                    <th class="text-xs font-weight-bolder ps-2 text-primary">Password</th>
+                                    <th class="text-xs font-weight-bolder ps-2 text-primary">Role</th>
+                                    <th class="text-xs text-center font-weight-bolder ps-4 text-primary">Status</th>
+                                    <th class="text-xs text-center font-weight-bolder ps-3 text-primary">Acrion</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            <p class="text-xs  mb-0">
+                                                @Html.DisplayFor(modelItem => item.Id)
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <h6 class="mb-0 text-xs">
+                                                @Html.DisplayFor(modelItem => item.FullName)
+
+                                            </h6>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">
+                                                @Html.DisplayFor(modelItem => item.Email)
+
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">
+                                                @Html.DisplayFor(modelItem => item.Password)
+
+                                            </p>
+                                        </td>
+                                        <td class="text-sm">
+                                            <p class="text-xs font-weight-bold mb-0">
+
+                                                @if (item.Role == "1")
+                                                {
+                                                    <span>Admin</span>
+                                                }
+                                                else if (item.Role == "2")
+                                                {
+                                                    <span>Client</span>
+
+                                                }
+                                                else if (item.Role == "3")
+                                                {
+                                                    <span>Supervisor</span>
+
+                                                }
+                                                else
+                                                {
+                                                    <span>User</span>
+                                                }
+                                            </p>
+                                        </td>
+                                        <td class="text-center">
+                                            @if (@item.Active == true)
+                                            {
+                                                <span class="badge badge-sm text-xxs  bg-gradient-success">Active</span>
+                                            }else
+                                            {
+                                                <span class="badge badge-sm text-xxs  bg-gradient-secondary">InActive</span>
+                                            }
+
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            <a asp-controller="Users" asp-action="Details" asp-route-id="@item.Id" class="badge badge-sm bg-gradient-light text-dark">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                            <a asp-controller="Users" asp-action="Update" asp-route-id="@item.Id" class="badge badge-sm bg-gradient-dark">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

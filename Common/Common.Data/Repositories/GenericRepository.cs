@@ -30,5 +30,16 @@ namespace Common.Data.Repositories
                 throw;
             }
         }
+        public async Task<List<TModel>> GetAllUsers()
+        {
+            try
+            {
+                return await _dbcontext.Set<TModel>().ToListAsync();
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }

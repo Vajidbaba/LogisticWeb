@@ -10,5 +10,7 @@ namespace Common.Data.Repositories.Contracts
     public interface IGenericRepository<TModel> where TModel : class
     {
         Task<List<TModel>> GetEmployees();
+        Task<List<TModel>> GetAllUsers();
+
     }
 }
