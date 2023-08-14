@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Common.Core.ViewModels
+@model LoginVM
+@{
     ViewData["Title"] = "Login";
 }
 <div class="container">
@@ -13,18 +15,19 @@
                             <h5 class="font-weight-bolder text-primary ">Welcome back to Logistic</h5>
                             <p class="mb-0 text-xs">Enter your email and password to sign in</p>
                         </div>
+
                         <div class="card-body">
-                            <form role="form">
+                            <form role="form" method="post" asp-action="Login" asp-controller="Login">
                                 <label>Email</label>
                                 <div class="mb-3">
-                                    <input type="email" class="form-control form-control-sm" placeholder="Email" aria-label="Email" aria-describedby="email-addon">
+                                    <input type="text" asp-for="Email" class="form-control form-control-sm" placeholder="Email" aria-label="Email" aria-describedby="email-addon">
                                 </div>
                                 <label>Password</label>
                                 <div class="mb-3">
-                                    <input type="email" class="form-control form-control-sm" placeholder="Password" aria-label="Password" aria-describedby="password-addon">
+                                    <input type="text" asp-for="Password" class="form-control form-control-sm" placeholder="Password" aria-label="Password" aria-describedby="password-addon">
                                 </div>
                                 <div class="text-center">
-                                    <a href="~/Admin/Dashboard/List" class="btn bg-primary btn-sm text-white w-100 mt-4 mb-0">Sign in</a>
+                                    <button type="submit" class="btn bg-primary btn-sm text-white w-100 mt-4 mb-0">Sign in</button>
                                 </div>
                             </form>
                         </div>

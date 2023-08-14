@@ -10,10 +10,8 @@ namespace Common.Core.Services.Contracts
     public interface IUsersService
     {
         Task<List<Users>> GetAllUsers();
-        Users CreateNewUser(Users users);
+        int CreateNewUser(Users users);
         Users GetUsersDetails(int? Id);
-        Users UpdatePerson(Users users);
-
-
+        bool UpdatePerson(int id, Users users);
     }
 }

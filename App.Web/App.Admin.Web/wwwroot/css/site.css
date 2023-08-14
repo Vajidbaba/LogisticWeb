@@ -21,3 +21,9 @@ body {
   margin-top: -65px;
   margin-bottom: 20px;
 }
+
+div:where(.swal2-container) div:where(.swal2-popup) {
+  width: 21em !important;
+  padding: 0 0 1.25em !important;
+  font-size: 0.8rem !important;
+}

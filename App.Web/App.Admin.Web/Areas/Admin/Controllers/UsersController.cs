@@ -10,7 +10,7 @@ namespace App.Admin.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
 
-    public class UsersController : Controller
+    public class UsersController : BaseController
     {
         private readonly IUsersService _userService;
 
@@ -38,18 +38,22 @@ namespace App.Admin.Web.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Create(Users user)
         {
-            if (ModelState.IsValid) {
-                var data = new Users();
+            var data = new Users();
+            if (ModelState.IsValid)
+            {
                 data.Active = true;
                 data.FullName = user.FullName;
                 data.Email = user.Email;
                 data.Password = user.Password;
                 data.Role = user.Role;
-
                 _userService.CreateNewUser(data);
+                Toast("Data Saved!", ToastType.SUCCESS);
                 return RedirectToAction("List", "Users");
             }
-            return View(user);
+            Toast("Enter Full Name", ToastType.ERROR);
+
+            return RedirectToAction("Add", "Users");
+
         }
 
         [HttpGet]
@@ -69,7 +73,7 @@ namespace App.Admin.Web.Areas.Admin.Controllers
             return View(user);
         }
         [HttpPost]
-        public IActionResult UpdateUser(Users user)
+        public IActionResult UpdateUser(int id, Users user)
         {
             if (user != null)
             {
@@ -80,7 +84,9 @@ namespace App.Admin.Web.Areas.Admin.Controllers
                 data.Email = user.Email;
                 data.Password = user.Password;
                 data.Role = user.Role;
-                _userService.UpdatePerson(data);
+                _userService.UpdatePerson(id, data);
+                Toast("Data", ToastType.SUCCESS);
+
                 return RedirectToAction("List", "Users");
             }
             return View(user);

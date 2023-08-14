@@ -3,20 +3,6 @@ using Common.Core.ViewModels;
 using Common.Data.Context;
 using Common.Data.Models;
 using Common.Data.Repositories.Contracts;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
-using System;
-using System.Buffers.Text;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Runtime.ConstrainedExecution;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Channels;
-using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Common.Core.Services
 {
@@ -43,13 +29,20 @@ namespace Common.Core.Services
                 throw;
             }
         }
-        public Users CreateNewUser(Users entity)
+        public int CreateNewUser(Users entity)
         {
             try
             {
-                _dbcontext.Users.Add(entity);
+                Users logistic = new Users();
+                logistic.Active = true;
+                logistic.FullName = entity.FullName;
+                logistic.Email = entity.Email;
+                logistic.Password = entity.Password;
+                logistic.Role = entity.Role;
+
+                _dbcontext.Users.Add(logistic);
                 _dbcontext.SaveChanges();
-                return entity;
+                return logistic.Id;
             }
             catch (Exception)
             {
@@ -57,13 +50,24 @@ namespace Common.Core.Services
                 throw;
             }
         }
-        public Users UpdatePerson(Users entity)
+        public bool UpdatePerson(int id, Users model)
         {
             try
             {
+                var entity = _dbcontext.Users.Where(x => x.Id == id).SingleOrDefault();
+
+                if (entity == null)
+                {
+                    return false;
+                }
+                entity.Active = model.Active;
+                entity.FullName = model.FullName;
+                entity.Email = model.Email;
+                entity.Password = model.Password;
+                entity.Role = model.Role;
                 _dbcontext.Update(entity);
                 _dbcontext.SaveChanges();
-                return entity;
+                return true;
             }
             catch (Exception)
             {

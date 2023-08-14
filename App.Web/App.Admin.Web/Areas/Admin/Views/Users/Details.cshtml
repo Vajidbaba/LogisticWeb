@@ -17,21 +17,21 @@
                     <li class="list-group-item border-0 ps-0 text-xs"><strong class="text-dark">Role:</strong>
                         @if (@Model.Role  == "1")
                         {
-                            <span>Admin</span>
+                            <span class="fw-bolder text-primary">Admin</span>
                         }
                         else if (@Model.Role == "2")
                         {
-                            <span>Client</span>
+                            <span class="fw-bolder text-primary">Client</span>
 
                         }
                         else if (@Model.Role == "3")
                         {
-                            <span>Supervisor</span>
+                            <span class="fw-bolder text-primary">Supervisor</span>
 
                         }
                         else
                         {
-                            <span>User</span>
+                            <span cite="fw-bolder text-primary">User</span>
                         }
                     </li>
                     <li class="list-group-item border-0 ps-0 text-xs"><strong class="text-dark">User Id:</strong> @Model.Id</li>
@@ -43,7 +43,20 @@
                     <li class="list-group-item border-0 ps-0 text-xs"><strong class="text-dark">Created By:</strong> &nbsp; @Model.CreatedBy</li>
                     <li class="list-group-item border-0 ps-0 text-xs"><strong class="text-dark">Updated On:</strong> @Model.UpdatedOn</li>
                     <li class="list-group-item border-0 ps-0 text-xs"><strong class="text-dark">Updated By:</strong> @Model.UpdatedBy</li>
-                    <li class="list-group-item border-0 ps-0 text-xs"><strong class="text-dark">Status:</strong> @Model.Active</li>
+                    <li class="list-group-item border-0 ps-0 text-xs"><strong class="text-dark">Status: </strong> &nbsp;
+                      
+                        @if (@Model.Active == true)
+                        {
+                            <span class="badge badge-sm text-xxs  bg-gradient-success"> Active</span>
+
+                        }
+                        else
+                        {
+                            <span class="badge badge-sm text-xxs  bg-gradient-secondary"> InActive</span>
+
+                        }
+
+                    </li>
                 </ul>
             </div>
 
