@@ -13,10 +13,7 @@ namespace App.Admin.Web.Areas.Admin.Controllers
     public class UsersController : BaseController
     {
         private readonly IUsersService _userService;
-
         private readonly LogisticContext _dbcontext;
-
-
 
         public UsersController(IUsersService userService, LogisticContext dbcontext)
         {
@@ -36,24 +33,23 @@ namespace App.Admin.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Users user)
+        public IActionResult Create(UsersModel user)
         {
-            var data = new Users();
-            if (ModelState.IsValid)
+            UsersModel data = new UsersModel();
+            if (data != null)
             {
                 data.Active = true;
-                data.FullName = user.FullName;
-                data.Email = user.Email;
+                data.Username = user.Username;
+                data.Mobile = user.Mobile;
                 data.Password = user.Password;
                 data.Role = user.Role;
-                _userService.CreateNewUser(data);
-                Toast("Data Saved!", ToastType.SUCCESS);
+                _userService.CreateUser(data);
+
+                Toast("User created successfully!", ToastType.SUCCESS);
                 return RedirectToAction("List", "Users");
             }
-            Toast("Enter Full Name", ToastType.ERROR);
-
-            return RedirectToAction("Add", "Users");
-
+            Toast("Please enter all fields", ToastType.ERROR);
+            return RedirectToAction("List", "Users");
         }
 
         [HttpGet]
@@ -63,7 +59,6 @@ namespace App.Admin.Web.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
             var user = _userService.GetUsersDetails(Id);
             if (user == null)
             {
@@ -73,20 +68,19 @@ namespace App.Admin.Web.Areas.Admin.Controllers
             return View(user);
         }
         [HttpPost]
-        public IActionResult UpdateUser(int id, Users user)
+        public IActionResult UpdateUser(int id, UsersModel user)
         {
             if (user != null)
             {
-                var data = new Users();
+                var data = new UsersModel();
                 data.Id = user.Id;
                 data.Active = user.Active;
-                data.FullName = user.FullName;
-                data.Email = user.Email;
+                data.Username = user.Username;
+                data.Mobile  = user.Mobile;
                 data.Password = user.Password;
                 data.Role = user.Role;
-                _userService.UpdatePerson(id, data);
-                Toast("Data", ToastType.SUCCESS);
-
+                _userService.UpdateUser(id, data);
+                Toast("User Updated Successfully!", ToastType.SUCCESS);
                 return RedirectToAction("List", "Users");
             }
             return View(user);

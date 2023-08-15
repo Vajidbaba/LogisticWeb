@@ -27,7 +27,7 @@ namespace App.Admin.Web.Controllers
         {
             var model = new LoginVM();
 #if DEBUG
-            model.Email = "test@test.com";
+            model.Usernmae = "john.doe";
 #endif
             return View(model);
         }
@@ -37,27 +37,30 @@ namespace App.Admin.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                Toast("Data", ToastType.ERROR);
+                Toast("Enter user name and password", ToastType.ERROR);
                 return View(model);
             }
             var userInfo = new Users();
 
-            userInfo = _dbcontext.Users.Where(x => x.Email == model.Email && x.Password == model.Password).FirstOrDefault();
-
-
-            if (userInfo == null || string.IsNullOrEmpty(userInfo.Email))
+            try
             {
-                Toast("Data", ToastType.ERROR);
+                userInfo = _dbcontext.Users.Where(x => x.Username == model.Usernmae && x.Password == model.Password).FirstOrDefault();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            if (userInfo == null || string.IsNullOrEmpty(userInfo.Username))
+            {
+                Toast("User name null", ToastType.ERROR);
                 return View(model);
             }
             if (!userInfo.Active)
             {
-                Toast("Data", ToastType.ERROR);
+                Toast("In Active", ToastType.ERROR);
                 return View(model);
             }
-            return CreateIdentity(model.Email, userInfo.Role);
-
-
+            return CreateIdentity(model.Usernmae, userInfo.Role);
         }
 
         [NonAction]

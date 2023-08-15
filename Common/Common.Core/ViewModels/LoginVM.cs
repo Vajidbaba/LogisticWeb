@@ -9,8 +9,8 @@ namespace Common.Core.ViewModels
 {
     public class LoginVM
     {
-        [Required(ErrorMessage = "Please enter User name")]
-        public string? Email { get; set; }
+        [Required(ErrorMessage = "Please enter Username")]
+        public string? Usernmae { get; set; }
 
         [Required(ErrorMessage = "Please enter Password")]
         public string? Password { get; set; }

@@ -29,40 +29,37 @@ namespace Common.Core.Services
                 throw;
             }
         }
-        public int CreateNewUser(Users entity)
+        public int CreateUser(UsersModel entity)
         {
             try
             {
                 Users logistic = new Users();
                 logistic.Active = true;
-                logistic.FullName = entity.FullName;
-                logistic.Email = entity.Email;
+                logistic.Username = entity.Username;
+                logistic.Mobile = entity.Mobile;
                 logistic.Password = entity.Password;
                 logistic.Role = entity.Role;
-
                 _dbcontext.Users.Add(logistic);
                 _dbcontext.SaveChanges();
                 return logistic.Id;
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
-        public bool UpdatePerson(int id, Users model)
+        public bool UpdateUser(int id, UsersModel model)
         {
             try
             {
                 var entity = _dbcontext.Users.Where(x => x.Id == id).SingleOrDefault();
-
                 if (entity == null)
                 {
                     return false;
                 }
                 entity.Active = model.Active;
-                entity.FullName = model.FullName;
-                entity.Email = model.Email;
+                entity.Username = model.Username;
+                entity.Mobile = model.Mobile;
                 entity.Password = model.Password;
                 entity.Role = model.Role;
                 _dbcontext.Update(entity);
@@ -85,8 +82,8 @@ namespace Common.Core.Services
                 {
                     result.Id = user.Id;
                     result.Active = user.Active;
-                    result.FullName = user.FullName;
-                    result.Email = user.Email;
+                    result.Username = user.Username;
+                    result.Mobile = user.Mobile;
                     result.Password = user.Password;
                     result.Role = user.Role;
                     _dbcontext.Add(result);

@@ -61,7 +61,15 @@ namespace Common.Data.Context
                 entity.ToTable("Users");
 
                 entity.Property(e => e.Password)
-                    .HasMaxLength(25)
+                    .HasMaxLength(100)
+                    .HasColumnName("Username");
+
+                entity.Property(e => e.Password)
+                    .HasMaxLength(100)
+                    .HasColumnName("Mobile");
+
+                entity.Property(e => e.Password)
+                    .HasMaxLength(100)
                     .HasColumnName("password");
 
                 entity.Property(e => e.Role)
