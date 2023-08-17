@@ -14,6 +14,7 @@ namespace Common.Data.Repositories
     {
 
         private readonly LogisticContext _dbcontext;
+
         public GenericRepository(LogisticContext dbcontext)
         {
             _dbcontext = dbcontext;

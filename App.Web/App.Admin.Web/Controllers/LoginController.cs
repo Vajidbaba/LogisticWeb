@@ -27,7 +27,7 @@ namespace App.Admin.Web.Controllers
         {
             var model = new LoginVM();
 #if DEBUG
-            model.Usernmae = "john.doe";
+            model.Username = "john.doe";
 #endif
             return View(model);
         }
@@ -37,14 +37,14 @@ namespace App.Admin.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                Toast("Enter user name and password", ToastType.ERROR);
+                Toast(ACCOUNT_UID_PASSWORD, ToastType.ERROR);
                 return View(model);
             }
             var userInfo = new Users();
 
             try
             {
-                userInfo = _dbcontext.Users.Where(x => x.Username == model.Usernmae && x.Password == model.Password).FirstOrDefault();
+                userInfo = _dbcontext.Users.Where(x => x.Username == model.Username && x.Password == model.Password).FirstOrDefault();
             }
             catch (Exception)
             {
@@ -60,17 +60,18 @@ namespace App.Admin.Web.Controllers
                 Toast("In Active", ToastType.ERROR);
                 return View(model);
             }
-            return CreateIdentity(model.Usernmae, userInfo.Role);
+            return CreateIdentity(model.Username, userInfo.Role);
         }
 
         [NonAction]
-        private IActionResult CreateIdentity(string userName, string role)
+        private IActionResult CreateIdentity(string Username, string role)
         {
-            var claims = new List<Claim>();
-            {
-                new Claim(ClaimTypes.Name, userName);
-                new Claim(ClaimTypes.Role, role);
-            };
+            var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, Username),
+                    new Claim(ClaimTypes.Role, role)
+                };
+
             var claimIdentiy = new ClaimsIdentity(
                 claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var authProperties = new AuthenticationProperties

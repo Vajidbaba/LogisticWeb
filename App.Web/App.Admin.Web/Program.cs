@@ -1,25 +1,33 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Common.Data.Context;
 using Common.Core.Services.Contracts;
 using Common.Core.Services;
 using Common.Data.Repositories.Contracts;
 using Common.Data.Repositories;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<LogisticContext>(options => {
+builder.Services.AddDbContext<LogisticContext>(options =>
+{
     options.UseSqlServer(builder.Configuration.GetConnectionString("Sql"));
     options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 });
 
+builder.Services.AddControllersWithViews();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("RequiredRole",
+    policy => policy.RequireRole("Admin"));
+});
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
+    option => { option.LoginPath = "/Access/Login"; });
+
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IUsersService, UsresService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
-
-
-// Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<IContextHelper, ContextHelper>();
 
 var app = builder.Build();
 
@@ -29,10 +37,9 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
 }
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthorization();
+app.UseAuthentication();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(

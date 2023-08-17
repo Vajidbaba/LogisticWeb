@@ -8,8 +8,10 @@ namespace Common.Data.Context
 {
     public partial class LogisticContext : DbContext
     {
-        public LogisticContext()
+        private IContextHelper _contextHelper;
+        public LogisticContext(DbContextOptions<LogisticContext> options, IContextHelper contextHelper): base(options)
         {
+            _contextHelper = contextHelper;
         }
 
         public LogisticContext(DbContextOptions<LogisticContext> options) : base(options)

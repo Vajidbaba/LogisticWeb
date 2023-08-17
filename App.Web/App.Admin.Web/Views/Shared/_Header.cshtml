@@ -9,7 +9,11 @@
             </div>
             <ul class="navbar-nav  justify-content-end">
              
-              
+                @User.Identity.Name 
+                @if (User.Identity.IsAuthenticated)
+                {
+                    @User.FindFirst(System.Security.Claims.ClaimTypes.Name).Value
+                }
 
                 <li class="nav-item d-flex align-items-center">
                     <a href="~/Login/Login" class="nav-link text-body font-weight-bold px-0">

@@ -14,10 +14,11 @@
                         <div class="numbers">
                             <p class="text-sm mb-0 text-capitalize font-weight-bold">New Orders</p>
                             <h5 class="font-weight-bolder mb-0">
-                               @* 53,00*@
+                                53,00
+                               
                                 @if (User.Identity.IsAuthenticated)
                                 {
-                                    @User.FindFirst(System.Security.Claims.ClaimTypes.Name).Value
+                                  <span>@User.FindFirst(System.Security.Claims.ClaimTypes.Name).Value</span>
                                 }
                             </h5>
                         </div>

@@ -13,15 +13,19 @@ namespace App.Admin.Web.Areas.Admin.Controllers
     public class UsersController : BaseController
     {
         private readonly IUsersService _userService;
+        private readonly IContextHelper _contextHelper;
+
         private readonly LogisticContext _dbcontext;
 
-        public UsersController(IUsersService userService, LogisticContext dbcontext)
+        public UsersController(IUsersService userService, LogisticContext dbcontext, IContextHelper contextHelper)
         {
             _userService = userService;
             _dbcontext = dbcontext;
+            _contextHelper = contextHelper;
         }
         public async Task<IActionResult> List()
         {
+            var userName = _contextHelper.GetUsername();
             List<Users> listEmployees = await _userService.GetAllUsers();
             return View(listEmployees);
         }
