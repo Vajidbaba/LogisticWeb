@@ -10,13 +10,14 @@ namespace Common.Core.Services
     {
         private readonly IGenericRepository<Users> _repository;
         private readonly LogisticContext _dbcontext;
+        private readonly IContextHelper _contextHelper;
 
 
-        public UsresService(IGenericRepository<Users> repository, LogisticContext dbcontext)
+        public UsresService(IGenericRepository<Users> repository, LogisticContext dbcontext, IContextHelper contextHelper)
         {
             _repository = repository;
             _dbcontext = dbcontext;
-
+            _contextHelper = contextHelper;
         }
         public async Task<List<Users>> GetAllUsers()
         {
@@ -29,13 +30,37 @@ namespace Common.Core.Services
                 throw;
             }
         }
+        public string GetLastUsersId()
+        {
+            try
+            {
+                var data = _dbcontext.Users.OrderBy(u => u.Id).LastOrDefault()?.Id;
+                var result = data.ToString();
+
+                if (result != null)
+                {
+                    return result;
+                }
+                return "Not Found";
+            }
+            catch
+            {
+                throw;
+            }
+        }
         public int CreateUser(UsersModel entity)
         {
             try
             {
+                var userId = _contextHelper.GetUsername();
                 Users logistic = new Users();
                 logistic.Active = true;
+                logistic.CreatedBy = userId;
+                logistic.CreatedOn = DateTime.Now;
+                logistic.UpdatedBy = userId;
+                logistic.UpdatedOn = DateTime.Now;
                 logistic.Username = entity.Username;
+                logistic.UserId = entity.UserId;
                 logistic.Mobile = entity.Mobile;
                 logistic.Password = entity.Password;
                 logistic.Role = entity.Role;
@@ -52,11 +77,14 @@ namespace Common.Core.Services
         {
             try
             {
+                var userId = _contextHelper.GetUsername();
                 var entity = _dbcontext.Users.Where(x => x.Id == id).SingleOrDefault();
                 if (entity == null)
                 {
                     return false;
                 }
+                entity.UpdatedBy = userId;
+                entity.UpdatedOn = DateTime.Now;
                 entity.Active = model.Active;
                 entity.Username = model.Username;
                 entity.Mobile = model.Mobile;

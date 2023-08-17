@@ -33,6 +33,7 @@ namespace App.Admin.Web.Areas.Admin.Controllers
 
         public IActionResult Add()
         {
+
             return View();
         }
 
@@ -42,13 +43,23 @@ namespace App.Admin.Web.Areas.Admin.Controllers
             UsersModel data = new UsersModel();
             if (data != null)
             {
-                data.Active = true;
-                data.Username = user.Username;
-                data.Mobile = user.Mobile;
-                data.Password = user.Password;
-                data.Role = user.Role;
-                _userService.CreateUser(data);
+                if (user.Username != null)
+                {
+                    var getLastId = _userService.GetLastUsersId();
+                    string inputString = user.Username;
+                    char firstLetter = inputString[0];
+                    string inputStrings = user.Username;
+                    string[] words = inputStrings.Split(' ');
+                    string lastWord = words[words.Length - 1];
 
+                    data.Active = true;
+                    data.UserId = firstLetter.ToString().ToLower() + lastWord.ToLower() + getLastId;
+                    data.Username = user.Username;
+                    data.Mobile = user.Mobile;
+                    data.Password = user.Password;
+                    data.Role = user.Role;
+                    _userService.CreateUser(data);
+                }
                 Toast("User created successfully!", ToastType.SUCCESS);
                 return RedirectToAction("List", "Users");
             }
@@ -80,7 +91,7 @@ namespace App.Admin.Web.Areas.Admin.Controllers
                 data.Id = user.Id;
                 data.Active = user.Active;
                 data.Username = user.Username;
-                data.Mobile  = user.Mobile;
+                data.Mobile = user.Mobile;
                 data.Password = user.Password;
                 data.Role = user.Role;
                 _userService.UpdateUser(id, data);

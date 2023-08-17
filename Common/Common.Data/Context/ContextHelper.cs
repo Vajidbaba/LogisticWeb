@@ -28,7 +28,7 @@ namespace Common.Data.Context
             if (_httpContextAccessor.HttpContext != null && _httpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
             {
                 string userName = _httpContextAccessor.HttpContext.User.Identity.Name;
-                return ($"Authenticated user: {userName}");
+                return $"{userName}";
             }
 
             return ("User is not authenticated.");

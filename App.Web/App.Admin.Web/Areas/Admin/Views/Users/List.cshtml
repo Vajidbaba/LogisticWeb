@@ -28,6 +28,7 @@
                                 <tr>
                                     <th class="text-xs font-weight-bolder ps-2 text-primary">Id</th>
                                     <th class="text-xs font-weight-bolder ps-2 text-primary">Username</th>
+                                    <th class="text-xs font-weight-bolder ps-2 text-primary">User Id</th>
                                     <th class="text-xs font-weight-bolder ps-2 text-primary">Mobile</th>
                                     <th class="text-xs font-weight-bolder ps-2 text-primary">Password</th>
                                     <th class="text-xs font-weight-bolder ps-2 text-primary">Role</th>
@@ -48,6 +49,12 @@
                                         <td>
                                             <h6 class="mb-0 text-xs">
                                                 @Html.DisplayFor(modelItem => item.Username)
+
+                                            </h6>
+                                        </td>
+                                        <td>
+                                            <h6 class="mb-0 text-xs">
+                                                @Html.DisplayFor(modelItem => item.UserId)
 
                                             </h6>
                                         </td>

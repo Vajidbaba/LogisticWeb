@@ -15,11 +15,6 @@
                             <p class="text-sm mb-0 text-capitalize font-weight-bold">New Orders</p>
                             <h5 class="font-weight-bolder mb-0">
                                 53,00
-                               
-                                @if (User.Identity.IsAuthenticated)
-                                {
-                                  <span>@User.FindFirst(System.Security.Claims.ClaimTypes.Name).Value</span>
-                                }
                             </h5>
                         </div>
                     </div>

@@ -3,25 +3,21 @@
        @* <nav aria-label="breadcrumb">
             <h6 class="font-weight-bolder mb-0">Logistics</h6>
         </nav>*@
-        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-            <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-               
+        <div class="collapse navbar-collapse mt-sm-0 mt-2 " id="navbar">
+            <div class="ms-md-auto pe-md-3 d-flex align-items-center text-sm">
+                <div class="dropdown">
+                    <div class="m-0 dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-power-off text-danger mx-sm-1"></i>
+                    </div>
+                    <div class="dropdown-menu">
+                       <a class="dropdown-item" href="#">Logout</a>
+                    </div>
+                </div>
             </div>
-            <ul class="navbar-nav  justify-content-end">
-             
-                @User.Identity.Name 
-                @if (User.Identity.IsAuthenticated)
-                {
-                    @User.FindFirst(System.Security.Claims.ClaimTypes.Name).Value
-                }
 
-                <li class="nav-item d-flex align-items-center">
-                    <a href="~/Login/Login" class="nav-link text-body font-weight-bold px-0">
-                        <i class="fa fa-user me-sm-1"></i>
-                        <span class="d-sm-inline d-none">Sign Out</span>
-                    </a>
-                </li>
-            </ul>
+            <div class="navbar-nav d-flex align-items-center justify-content-end">
+                <span class="me-2">Welcome,</span> <b>@User.FindFirst(System.Security.Claims.ClaimTypes.Name).Value</b>
+            </div>
         </div>
     </div>
 </nav>

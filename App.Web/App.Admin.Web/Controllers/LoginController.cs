@@ -27,7 +27,7 @@ namespace App.Admin.Web.Controllers
         {
             var model = new LoginVM();
 #if DEBUG
-            model.Username = "john.doe";
+            model.UserId = "vali";
 #endif
             return View(model);
         }
@@ -44,15 +44,15 @@ namespace App.Admin.Web.Controllers
 
             try
             {
-                userInfo = _dbcontext.Users.Where(x => x.Username == model.Username && x.Password == model.Password).FirstOrDefault();
+                userInfo = _dbcontext.Users.Where(x => x.UserId == model.UserId && x.Password == model.Password).FirstOrDefault();
             }
             catch (Exception)
             {
                 throw;
             }
-            if (userInfo == null || string.IsNullOrEmpty(userInfo.Username))
+            if (userInfo == null || string.IsNullOrEmpty(userInfo.UserId))
             {
-                Toast("User name null", ToastType.ERROR);
+                Toast("Please enter user Id", ToastType.ERROR);
                 return View(model);
             }
             if (!userInfo.Active)
@@ -60,15 +60,15 @@ namespace App.Admin.Web.Controllers
                 Toast("In Active", ToastType.ERROR);
                 return View(model);
             }
-            return CreateIdentity(model.Username, userInfo.Role);
+            return CreateIdentity(model.UserId, userInfo.Role);
         }
 
         [NonAction]
-        private IActionResult CreateIdentity(string Username, string role)
+        private IActionResult CreateIdentity(string UserId, string role)
         {
             var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, Username),
+                    new Claim(ClaimTypes.Name, UserId),
                     new Claim(ClaimTypes.Role, role)
                 };
 
