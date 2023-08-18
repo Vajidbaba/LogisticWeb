@@ -26,17 +26,18 @@
     @await RenderSectionAsync("Scripts", required: false)
     @await Html.PartialAsync("_Js")
     @await Html.PartialAsync("_ToastAlert")
+
+
     <script>
-        // Add active class to the current button (highlight it)
-        var header = document.getElementById("side-main");
-        var btns = header.getElementsByClassName("nav-links");
-        for (var i = 0; i < btns.length; i++) {
-            btns[i].addEventListener("click", function () {
-                var current = document.getElementsByClassName("active");
-                current[0].className = current[0].className.replace(" active", "");
-                this.className += " active";
+        $(document).ready(function () {
+            var current = window.location.pathname;
+            $('.navbar-nav li a').each(function () {
+                var $this = $(this);
+                if ($this.attr('href').indexOf(current) !== -1) {
+                    $this.addClass(' active');     
+                }
             });
-        }
+        })
     </script>
 </body>
 </html>

@@ -8061,7 +8061,7 @@ fieldset:disabled .btn {
 }
 
 .link-primary {
-  color: #22a685 !important;
+  color: #9b6efc !important;
 }
 
 .link-primary:hover,
@@ -8771,7 +8771,7 @@ fieldset:disabled .btn {
 }
 
 .border-primary {
-  border-color: #22a685 !important;
+  border-color: #9b6efc !important;
 }
 
 .border-secondary {
@@ -10580,7 +10580,7 @@ fieldset:disabled .btn {
 
 /* rtl:end:remove */
 .text-primary {
-  color: #22a685 !important;
+  color: #9b6efc !important;
 }
 
 .text-secondary {
@@ -10652,7 +10652,7 @@ fieldset:disabled .btn {
 }
 
 .bg-primary {
-  background-color: #22a685 !important;
+  background-color: #9b6efc !important;
 }
 
 .bg-secondary {
@@ -21019,7 +21019,7 @@ fieldset:disabled .btn {
 }
 
 .card.card-background.card-background-mask-primary:after {
-      background-image: linear-gradient(310deg, #08b489 0%, #19adaa 100%);
+      background-image: linear-gradient(310deg, #9b6efc 0%, #492596 100%);
   opacity: .85;
 }
 
@@ -21738,7 +21738,7 @@ label,
 }
 
 .bg-gradient-primary {
-      background-image: linear-gradient(310deg, #08b489 0%, #19adaa 100%);
+      background-image: linear-gradient(310deg, #9b6efc 0%, #492596 100%);
 }
 
 .bg-gradient-secondary {
@@ -23187,7 +23187,7 @@ html {
 }
 
 .sidenav[data-color="primary"] .navbar-nav>.nav-item>.nav-link.active .icon {
-      background-image: linear-gradient(310deg, #08b489 0%, #19adaa 100%);
+      background-image: linear-gradient(310deg, #9b6efc 0%, #492596 100%);
 }
 
 .sidenav[data-color="secondary"] .navbar-nav>.nav-item>.nav-link.active .icon {
@@ -23332,7 +23332,7 @@ html {
 }
 
 .navbar-vertical .navbar-nav>.nav-item .nav-link.active .icon {
-      background-image: linear-gradient(310deg, #08b489 0%, #19adaa 100%);
+      background-image: linear-gradient(310deg, #9b6efc 0%, #492596 100%);
 }
 
 .navbar-vertical .navbar-nav>.nav-item .nav-link.active .icon svg .color-background,
@@ -23806,7 +23806,7 @@ html {
 .pagination.pagination-primary .page-item.active>.page-link,
 .pagination.pagination-primary .page-item.active>.page-link:focus,
 .pagination.pagination-primary .page-item.active>.page-link:hover {
-      background-image: linear-gradient(310deg, #08b489 0%, #19adaa 100%);
+      background-image: linear-gradient(310deg, #9b6efc 0%, #492596 100%);
   border: none;
   color: #fff;
 }
@@ -26234,7 +26234,7 @@ span.flatpickr-weekday {
 }
 
 .noUi-connect {
-      background-image: linear-gradient(310deg, #08b489 0%, #19adaa 100%);
+      background-image: linear-gradient(310deg, #9b6efc 0%, #492596 100%);
 }
 
 /* Handles and cursors;

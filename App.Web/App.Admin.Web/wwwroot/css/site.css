@@ -27,3 +27,43 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   padding: 0 0 1.25em !important;
   font-size: 0.8rem !important;
 }
+
+.card {
+  box-shadow: 0 0 0.3125rem 0 rgb(0 0 0/12%) !important;
+}
+
+.power-btn {
+  background: #ffffff;
+  padding: 3px;
+  border-radius: 30px;
+  box-shadow: 0 0 0.3125rem 0 rgb(0 0 0/12%) !important;
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+  text-align: center !important;
+  margin: 0 0 0 12px;
+}
+
+.v-bg-color {
+  background: #492596 !important;
+}
+.v-color {
+  color: #492596 !important;
+}
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+  padding: 2px 0 4px 10px !important;
+}
+.table-striped > tbody > tr:nth-of-type(even) > * {
+  padding: 2px 0 4px 10px !important;
+  background: #fafafa !important;
+}
+th {
+  padding: 2px 0 4px 10px !important;
+
+}
+td {
+  border: 1px solid #fff !important;
+}
+.table {
+  border-collapse: collapse !important;
+}

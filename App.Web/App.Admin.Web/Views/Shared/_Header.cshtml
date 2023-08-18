@@ -1,22 +1,16 @@
 ﻿<nav class="navbar  navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
-    <div class="container-fluid py-1 px-3">
+    <div class="container-fluid py-1 ps-3 pe-0">
        @* <nav aria-label="breadcrumb">
             <h6 class="font-weight-bolder mb-0">Logistics</h6>
         </nav>*@
-        <div class="collapse navbar-collapse mt-sm-0 mt-2 " id="navbar">
-            <div class="ms-md-auto pe-md-3 d-flex align-items-center text-sm">
-                <div class="dropdown">
-                    <div class="m-0 dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa fa-power-off text-danger mx-sm-1"></i>
-                    </div>
-                    <div class="dropdown-menu">
-                       <a class="dropdown-item" href="#">Logout</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="navbar-nav d-flex align-items-center justify-content-end">
+        <div class="collapse navbar-collapse " id="navbar">
+            <div class="navbar-nav d-flex ms-md-auto align-items-center justify-content-end">
                 <span class="me-2">Welcome,</span> <b>@User.FindFirst(System.Security.Claims.ClaimTypes.Name).Value</b>
+            </div>
+            <div class="power-btn" style="">
+              <a href="~/login">
+                <i class="fa fa-power-off text-danger"></i>
+              </a>
             </div>
         </div>
     </div>

@@ -3,11 +3,11 @@
 @{
     ViewData["Title"] = "Users";
 }
-<h6 class="font-weight-bolder va-title text-primary">Users</h6>
+<h6 class="font-weight-bolder va-title v-color">Users</h6>
 
 <div class="row">
     <div class="col-12 ">
-        <a href="~/Admin/users/add" class="btn btn-sm bg-primary text-white">
+        <a href="~/Admin/users/add" class="btn btn-sm v-bg-color text-white">
             <i class="fa fa-plus me-2 text-xs"></i>
             Add New User
         </a>
@@ -18,31 +18,31 @@
     <div class="row">
         <div class="col-12">
             <div class="card m-0">
-                <div class="card-header p-3">
+                <div class="card-header pt-2 pb-0" style="background: #fafafa;">
                     <h6>Users List</h6>
                 </div>
                 <div class="card-body p-0">
-                    <div class="table-responsive p-2" style="height:340px;overflow:auto">
-                        <table class="table align-items-center mb-0">
-                            <thead>
+                    <div class="table-responsive p-2" style="height:340px;overflow:auto;">
+                        <table class="table align-items-center mb-0 table-striped dt-responsive nowrap">
+                            <thead >
                                 <tr>
-                                    <th class="text-xs font-weight-bolder ps-2 text-primary">Id</th>
-                                    <th class="text-xs font-weight-bolder ps-2 text-primary">Username</th>
-                                    <th class="text-xs font-weight-bolder ps-2 text-primary">User Id</th>
-                                    <th class="text-xs font-weight-bolder ps-2 text-primary">Mobile</th>
-                                    <th class="text-xs font-weight-bolder ps-2 text-primary">Password</th>
-                                    <th class="text-xs font-weight-bolder ps-2 text-primary">Role</th>
-                                    <th class="text-xs text-center font-weight-bolder ps-4 text-primary">Status</th>
-                                    <th class="text-xs text-center font-weight-bolder ps-3 text-primary">Action</th>
+                                    <th class="text-xs font-weight-bolder ps-4 v-color">Id</th>
+                                    <th class="text-xs font-weight-bolder ps-2 v-color">Username</th>
+                                    <th class="text-xs font-weight-bolder ps-2 v-color">User Id</th>
+                                    <th class="text-xs font-weight-bolder ps-2 v-color">Mobile</th>
+                                    <th class="text-xs font-weight-bolder ps-2 v-color">Password</th>
+                                    <th class="text-xs font-weight-bolder ps-2 v-color">Role</th>
+                                    <th class="text-xs text-center font-weight-bolder ps-4 v-color">Status</th>
+                                    <th class="text-xs text-center font-weight-bolder ps-3 v-color">Action</th>
 
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="border-1">
                                 @foreach (var item in Model)
                                 {
                                     <tr>
                                         <td>
-                                            <p class="text-xs  mb-0">
+                                            <p class="text-xs text-primary mb-0 ms-3 font-weight-bolder">
                                                 @Html.DisplayFor(modelItem => item.Id)
                                             </p>
                                         </td>
@@ -96,19 +96,19 @@
                                         <td class="text-center">
                                             @if (@item.Active == true)
                                             {
-                                                <span class="badge badge-sm text-xxs  bg-gradient-success">Active</span>
+                                                <span class="badge badge-xss px-2 py-1 text-xxs text-capitalize bg-gradient-success">Active</span>
                                             }else
                                             {
-                                                <span class="badge badge-sm text-xxs  bg-gradient-secondary">InActive</span>
+                                                <span class="badge badge-sm text-xxs px-2 py-1 text-capitalize bg-gradient-secondary">InActive</span>
                                             }
 
                                         </td>
                                         <td class="align-middle text-center text-sm">
-                                            <a asp-controller="Users" asp-action="Details" asp-route-id="@item.Id" class="badge badge-sm bg-gradient-light text-dark">
-                                                <i class="fa fa-eye"></i>
+                                            <a asp-controller="Users" asp-action="Details" asp-route-id="@item.Id" class="badge badge-sm text-capitalize px-2 py-1 bg-gradient-light text-dark">
+                                                <i class="fa fa-eye me-1"></i> Show
                                             </a>
-                                            <a asp-controller="Users" asp-action="Update" asp-route-id="@item.Id" class="badge badge-sm bg-gradient-dark">
-                                                <i class="fa fa-edit"></i>
+                                            <a asp-controller="Users" asp-action="Update" asp-route-id="@item.Id" class="badge badge-sm text-capitalize px-2 py-1 bg-gradient-dark">
+                                                <i class="fa fa-edit me-1"></i> Edit
                                             </a>
                                         </td>
                                     </tr>

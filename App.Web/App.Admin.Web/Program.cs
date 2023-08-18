@@ -43,7 +43,7 @@ app.UseAuthentication();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
-      name: "area",
+      name: "areas",
       pattern: "{area:exists}/{controller=Dashboard}/{action=List}/{id?}"
     );
 
