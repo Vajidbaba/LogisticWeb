@@ -47,23 +47,59 @@ div:where(.swal2-container) div:where(.swal2-popup) {
 .v-bg-color {
   background: #492596 !important;
 }
+
 .v-color {
   color: #492596 !important;
 }
+
 .table-striped > tbody > tr:nth-of-type(odd) > * {
-  padding: 2px 0 4px 10px !important;
+  padding: 5px 8px !important;
 }
+
 .table-striped > tbody > tr:nth-of-type(even) > * {
-  padding: 2px 0 4px 10px !important;
+  padding: 5px 8px !important;
   background: #fafafa !important;
+}
+
+table.dataTable > thead > tr > th, table.dataTable > thead > tr > td {
+  padding: 10px;
+  border: none !important;
+}
+
+.dataTables_wrapper.no-footer .dataTables_scrollBody {
+  border-bottom: none !important;
+}
+.dataTables_wrapper .dataTables_info {
+  clear: both;
+  float: left;
+  padding-top: 10px;
+  margin: 0 0 10px 10px;
+  font-size: 12px;
+  font-weight: 600;
 }
 th {
   padding: 2px 0 4px 10px !important;
-
 }
+
 td {
+  font-weight: 600;
+  font-size: 12px !important;
   border: 1px solid #fff !important;
 }
+
 .table {
   border-collapse: collapse !important;
+}
+
+.input-group .form-control:focus {
+  border-left: 1px solid #492596 !important;
+  border-right: 1px solid #492596 !important;
+}
+
+.form-control:focus {
+  color: #a085db;
+  background-color: #fff;
+  border-color: #a085db !important;
+  outline: 0;
+  box-shadow: 0 0 0 0.9px #a085db !important;
 }

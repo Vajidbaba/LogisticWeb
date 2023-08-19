@@ -20,6 +20,8 @@ namespace Common.Data.Context
 
         public virtual DbSet<Employee> Employees { get; set; } = null!;
         public virtual DbSet<Users> Users { get; set; } = null!;
+        public virtual DbSet<Orders> Orders { get; set; } = null!;
+
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -80,6 +82,8 @@ namespace Common.Data.Context
 
             
             });
+
+          
 
             OnModelCreatingPartial(modelBuilder);
         }

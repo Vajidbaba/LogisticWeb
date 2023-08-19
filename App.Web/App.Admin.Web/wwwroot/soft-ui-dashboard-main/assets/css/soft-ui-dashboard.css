@@ -47,7 +47,7 @@
   --bs-gray-900: #212529;
   --bs-primary: #cb0c9f;
   --bs-secondary: #8392AB;
-  --bs-success: #82d616;
+  --bs-success: #007f00;
   --bs-info: #17c1e8;
   --bs-warning: #fbcf33;
   --bs-danger: #ea0606;
@@ -3741,8 +3741,8 @@ fieldset:disabled .btn {
 
 .btn-success {
   --bs-btn-color: #000;
-  --bs-btn-bg: #82d616;
-  --bs-btn-border-color: #82d616;
+  --bs-btn-bg: #007f00;
+  --bs-btn-border-color: #007f00;
   --bs-btn-hover-color: #000;
   --bs-btn-hover-bg: #95dc39;
   --bs-btn-hover-border-color: #8fda2d;
@@ -3752,8 +3752,8 @@ fieldset:disabled .btn {
   --bs-btn-active-border-color: #8fda2d;
   --bs-btn-active-shadow: none;
   --bs-btn-disabled-color: #000;
-  --bs-btn-disabled-bg: #82d616;
-  --bs-btn-disabled-border-color: #82d616;
+  --bs-btn-disabled-bg: #007f00;
+  --bs-btn-disabled-border-color: #007f00;
 }
 
 .btn-info {
@@ -3893,19 +3893,19 @@ fieldset:disabled .btn {
 }
 
 .btn-outline-success {
-  --bs-btn-color: #82d616;
-  --bs-btn-border-color: #82d616;
+  --bs-btn-color: #007f00;
+  --bs-btn-border-color: #007f00;
   --bs-btn-hover-color: #000;
-  --bs-btn-hover-bg: #82d616;
-  --bs-btn-hover-border-color: #82d616;
+  --bs-btn-hover-bg: #007f00;
+  --bs-btn-hover-border-color: #007f00;
   --bs-btn-focus-shadow-rgb: 130, 214, 22;
   --bs-btn-active-color: #000;
-  --bs-btn-active-bg: #82d616;
-  --bs-btn-active-border-color: #82d616;
+  --bs-btn-active-bg: #007f00;
+  --bs-btn-active-border-color: #007f00;
   --bs-btn-active-shadow: none;
-  --bs-btn-disabled-color: #82d616;
+  --bs-btn-disabled-color: #007f00;
   --bs-btn-disabled-bg: transparent;
-  --bs-btn-disabled-border-color: #82d616;
+  --bs-btn-disabled-border-color: #007f00;
   --bs-gradient: none;
 }
 
@@ -8079,7 +8079,7 @@ fieldset:disabled .btn {
 }
 
 .link-success {
-  color: #82d616 !important;
+  color: #007f00 !important;
 }
 
 .link-success:hover,
@@ -8779,7 +8779,7 @@ fieldset:disabled .btn {
 }
 
 .border-success {
-  border-color: #82d616 !important;
+  border-color: #007f00 !important;
 }
 
 .border-info {
@@ -10588,7 +10588,7 @@ fieldset:disabled .btn {
 }
 
 .text-success {
-  color: #82d616 !important;
+  color: #007f00 !important;
 }
 
 .text-info {
@@ -10660,7 +10660,7 @@ fieldset:disabled .btn {
 }
 
 .bg-success {
-  background-color: #82d616 !important;
+  background-color: #007f00 !important;
 }
 
 .bg-info {
@@ -20317,7 +20317,7 @@ fieldset:disabled .btn {
 }
 
 .badge.bg-success {
-  background: #82d616;
+  background: #007f00;
 }
 
 .badge.bg-info {
@@ -20540,13 +20540,13 @@ fieldset:disabled .btn {
 
 .btn-success:hover,
 .btn.bg-gradient-success:hover {
-  background-color: #82d616;
-  border-color: #82d616;
+  background-color: #007f00;
+  border-color: #007f00;
 }
 
 .btn-success .btn.bg-outline-success,
 .btn.bg-gradient-success .btn.bg-outline-success {
-  border: 1px solid #82d616;
+  border: 1px solid #007f00;
 }
 
 .btn-success:not(:disabled):not(.disabled).active,
@@ -20555,8 +20555,8 @@ fieldset:disabled .btn {
 .btn.bg-gradient-success:not(:disabled):not(.disabled).active,
 .btn.bg-gradient-success:not(:disabled):not(.disabled):active,
 .show>.btn.bg-gradient-success.dropdown-toggle {
-  color: color-yiq(#82d616);
-  background-color: #82d616;
+  color: color-yiq(#007f00);
+  background-color: #007f00;
 }
 
 .btn-success.focus,
@@ -20574,7 +20574,7 @@ fieldset:disabled .btn {
   background-color: transparent;
   opacity: .75;
   box-shadow: none;
-  color: #82d616;
+  color: #007f00;
 }
 
 .btn-info:hover,
@@ -21814,7 +21814,7 @@ label,
 }
 
 .bg-gradient-faded-success-vertical {
-  background-image: radial-gradient(200px circle at 50% 70%, rgba(130, 214, 22, 0.3) 0, #82d616 100%);
+  background-image: radial-gradient(200px circle at 50% 70%, rgba(130, 214, 22, 0.3) 0, #007f00 100%);
 }
 
 .bg-gradient-faded-info-vertical {
@@ -23195,7 +23195,7 @@ html {
 }
 
 .sidenav[data-color="success"] .navbar-nav>.nav-item>.nav-link.active .icon {
-  background-image: linear-gradient(310deg, #82d616 0%, #82d616 100%);
+  background-image: linear-gradient(310deg, #007f00 0%, #007f00 100%);
 }
 
 .sidenav[data-color="info"] .navbar-nav>.nav-item>.nav-link.active .icon {

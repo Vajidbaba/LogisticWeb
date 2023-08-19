@@ -6,150 +6,108 @@
 <div class="row">
     <div class="col-12 ">
         <a href="~/Admin/orders/add" class="btn btn-sm v-bg-color text-white">
-            <i class="fa fa-plus me-2"></i>
+            <i class="fa fa-plus text-xs me-2"></i>
             Add Order
         </a>
     </div>
 </div>
-
 <div class="row ">
+    <div class="col-md-12">
+        <div class="card input-group p-3 pb-0 ">
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="text" class="form-control form-control-sm" id="divName" placeholder="Name" aria-label="Username">
+                </div>
+                <div class="col-md-3">
+                    <input type="date" class="form-control form-control-sm" id="divCreatedOn" placeholder="">
+                </div>
+                <div class="col-md-2 text-end">
+                    <button class=" btn btn-sm m-0 bg-success text-capitalize text-white" onclick="searchDetails()">
+                        <i class="fa fa-search text-xs me-2"></i>
+                        Search
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2">
     <div class="col-12">
         <div class="card m-0">
-            <div class="card-header p-3 pb-0">
-                <h6 class="m-0">Orders List</h6>
+            <div class="card-header pt-2 pb-0 ps-3" style="background: #fafafa;">
+                <h6 class="text-sm">Order List</h6>
             </div>
-            <div class="card-body p-0">
-                <div class="table-responsive py-2">
-                    <table class="table align-items-center mb-0">
-                        <thead>
-                            <tr>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Order Id</th>
+            <div class="card-body p-0 pt-2">
+                <table id="table" class="table align-items-center mb-0 table-striped dt-responsive nowrap w-100">
+                    <thead>
+                        <tr>
+                            <th class="text-xs font-weight-bolder ps-3 v-color">Action</th>
+                            <th class="text-xs font-weight-bolder ps-2 v-color">Name</th>
+                            <th class="text-xs font-weight-bolder ps-2 v-color">Order Date </th>
 
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Contact Number</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
-
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <p class="text-xs ps-3 font-weight-bold mb-0">1</p>
-                                </td>
-                                <td>
-                                    <h6 class="mb-0 text-sm">John Michael</h6>
-                                </td>
-                                <td>
-                                    <p class="text-xs font-weight-bold mb-0">test@test.com</p>
-                                </td>
-                                <td>
-                                    <p class="text-xs font-weight-bold mb-0">+91-6738373527</p>
-                                </td>
-                                <td class="align-middle text-center text-sm">
-                                    <span class="badge badge-sm bg-gradient-success">Completed</span>
-                                </td>
-
-                                <td class="align-middle text-center text-sm">
-                                    <a class="badge badge-sm bg-gradient-light text-dark">
-                                        <i class="fa fa-eye"></i>
-                                    </a>
-                                    <span class="badge badge-sm bg-gradient-dark">
-                                        <i class="fa fa-edit"></i>
-                                    </span>
-                                </td>
-
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p class="text-xs ps-3 font-weight-bold mb-0">2</p>
-                                </td>
-                                <td>
-                                    <h6 class="mb-0 text-sm">John Michael</h6>
-                                </td>
-                                <td>
-                                    <p class="text-xs font-weight-bold mb-0">test@test.com</p>
-                                </td>
-                                <td>
-                                    <p class="text-xs font-weight-bold mb-0">+91-6738373527</p>
-                                </td>
-                                <td class="align-middle text-center text-sm">
-                                    <span class="badge badge-sm bg-gradient-danger">Canceled</span>
-                                </td>
-
-                                <td class="align-middle text-center text-sm">
-                                    <a class="badge badge-sm bg-gradient-light text-dark">
-                                        <i class="fa fa-eye"></i>
-                                    </a>
-                                    <span class="badge badge-sm bg-gradient-dark">
-                                        <i class="fa fa-edit"></i>
-                                    </span>
-                                </td>
-
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p class="text-xs ps-3 font-weight-bold mb-0">3</p>
-                                </td>
-                                <td>
-                                    <h6 class="mb-0 text-sm">John Michael</h6>
-                                </td>
-                                <td>
-                                    <p class="text-xs font-weight-bold mb-0">test@test.com</p>
-                                </td>
-                                <td>
-                                    <p class="text-xs font-weight-bold mb-0">+91-6738373527</p>
-                                </td>
-                                <td class="align-middle text-center text-sm">
-                                    <span class="badge badge-sm bg-gradient-success">Completed</span>
-                                </td>
-
-                                <td class="align-middle text-center text-sm">
-                                    <a class="badge badge-sm bg-gradient-light text-dark">
-                                        <i class="fa fa-eye"></i>
-                                    </a>
-                                    <span class="badge badge-sm bg-gradient-dark">
-                                        <i class="fa fa-edit"></i>
-                                    </span>
-                                </td>
-
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p class="text-xs ps-3 font-weight-bold mb-0">4</p>
-                                </td>
-                                <td>
-                                    <h6 class="mb-0 text-sm">John Michael</h6>
-                                </td>
-                                <td>
-                                    <p class="text-xs font-weight-bold mb-0">test@test.com</p>
-                                </td>
-                                <td>
-                                    <p class="text-xs font-weight-bold mb-0">+91-6738373527</p>
-                                </td>
-                                <td class="align-middle text-center text-sm">
-                                    <span class="badge badge-sm text-dark bg-warning">Pending</span>
-                                </td>
-
-                                <td class="align-middle text-center text-sm">
-                                    <a class="badge badge-sm bg-gradient-light text-dark">
-                                        <i class="fa fa-eye"></i>
-                                    </a>
-                                    <span class="badge badge-sm bg-gradient-dark">
-                                        <i class="fa fa-edit"></i>
-                                    </span>
-                                </td>
-
-                            </tr>
-
-
-                        </tbody>
-                    </table>
-                </div>
+                        </tr>
+                    </thead>
+                </table>
             </div>
         </div>
     </div>
 </div>
 
+
+@section Scripts {
+    <script>
+
+        $(document).ready(function () {
+            searchDetails()
+        });
+    </script>
+    <script type="text/javascript">
+        function searchDetails() {
+            $(document).ready(function () {
+                $('#table').DataTable({
+                    "processing": false,
+                    "serverSide": true,
+                    "filter": false,
+                    "searching": false,
+                    "scrollX": true,
+                    "bSort": false,
+                    "sScrollY": true,
+                    "searchDelay": 10,
+                    "destroy": true,
+                    "scrollY": "240px",
+                    "scrollCollapse": true,
+                    "paging": false,
+                    "ajax": {
+                        "url": '@Url.Content("~/admin/Orders/GetOrders")',
+                        "type": "POST",
+                        "datatype": "json",
+                        "data": {
+                            Name: $('#divName').val(),
+                            CreatedOn: $('#divCreatedOn').val(),
+                        },
+                    },
+                    "columnDefs": [{
+                        targets: [0], render: function (data, type, row, meta) {
+                            return '<p type="button" class="text-xs text-primary mb-0 ms-3 font-weight-bolder" onclick="details(' + row.id + ')">' + row.id + '</p>'
+                        },
+                    }],
+                    "columns": [
+                        { "data": "id", "name": "id", "autoWidth": true },
+                        { "data": "name", "name": "name", "autoWidth": true },
+                        {
+                            "data": "createdOn", "name": "createdOn", "autoWidth": true,
+                            render: function (data) {
+                                var formattedDate = moment(data).format('DD-MM-YYYY');
+                                var formattedTime = moment(data).format('hh:mm a');
+                                return formattedDate + ', ' + '<span class="text-xs">' + formattedTime + '</span>';
+                            }
+                        }
+                    ]
+                });
+            });
+
+        }
+    </script>
+}
