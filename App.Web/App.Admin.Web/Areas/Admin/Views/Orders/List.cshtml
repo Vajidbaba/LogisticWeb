@@ -33,10 +33,10 @@
     </div>
 </div>
 
-<div class="row mt-2">
+<div class="row mt-3">
     <div class="col-12">
-        <div class="card m-0">
-            <div class="card-header pt-2 pb-0 ps-3" style="background: #fafafa;">
+        <div class="card m-0 rounded-3">
+            <div class="card-header pt-2 pb-0 ps-3 bg-light">
                 <h6 class="text-sm">Order List</h6>
             </div>
             <div class="card-body p-0 pt-2">
@@ -69,7 +69,7 @@
                 $('#table').DataTable({
                     "processing": false,
                     "serverSide": true,
-                    "filter": false,
+                    "filter": true,
                     "searching": false,
                     "scrollX": true,
                     "bSort": false,

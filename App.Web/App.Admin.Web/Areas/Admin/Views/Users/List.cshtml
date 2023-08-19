@@ -18,12 +18,12 @@
     <div class="row">
         <div class="col-12">
             <div class="card m-0">
-                <div class="card-header pt-2 pb-0 ps-3" style="background: #fafafa;">
+                <div class="card-header py-2 pb-0 ps-3 bg-light">
                     <h6 class="text-sm">User List</h6>
                 </div>
-                <div class="card-body p-0">
-                    <div class="table-responsive p-0" style="height:340px;overflow:auto;">
-                        <table class="table align-items-center mb-0 table-striped dt-responsive nowrap">
+                <div class="card-body  p-0">
+                    <div class="table-responsive py-2">
+                        <table id="tableUser" class="table w-100 align-items-center mb-0 table-striped dt-responsive nowrap">
                             <thead >
                                 <tr>
                                     <th class="text-xs font-weight-bolder ps-4 v-color">Id</th>
@@ -32,8 +32,8 @@
                                     <th class="text-xs font-weight-bolder ps-2 v-color">Mobile</th>
                                     <th class="text-xs font-weight-bolder ps-2 v-color">Password</th>
                                     <th class="text-xs font-weight-bolder ps-2 v-color">Role</th>
-                                    <th class="text-xs text-center font-weight-bolder ps-4 v-color">Status</th>
-                                    <th class="text-xs text-center font-weight-bolder ps-3 v-color">Action</th>
+                                    <th class="text-xs font-weight-bolder v-color">Status</th>
+                                    <th class="text-xs font-weight-bolder text-center v-color">Action</th>
 
                                 </tr>
                             </thead>
@@ -93,7 +93,7 @@
                                                 }
                                             </p>
                                         </td>
-                                        <td class="text-center">
+                                        <td class="">
                                             @if (@item.Active == true)
                                             {
                                                 <span class="badge badge-xss px-2 py-1 text-xxs text-capitalize bg-gradient-success">Active</span>
@@ -103,7 +103,7 @@
                                             }
 
                                         </td>
-                                        <td class="align-middle text-center text-sm">
+                                        <td class="align-middle w-10 text-sm">
                                             <a asp-controller="Users" asp-action="Details" asp-route-id="@item.Id" class="badge badge-sm text-capitalize px-2 py-1 bg-gradient-light text-dark">
                                                 <i class="fa fa-eye me-1"></i> Show
                                             </a>
@@ -124,3 +124,13 @@
     </div>
 
 </div>
+
+@section Scripts {
+    <script>
+
+        $(document).ready(function () {
+            $('#tableUser').DataTable({
+            })
+        });
+    </script>
+}
