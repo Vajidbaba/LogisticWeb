@@ -4,17 +4,14 @@ using Common.Core.ViewModels;
 using Common.Data.Context;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
 namespace App.Admin.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[Authorize]
-
-    public class OrdersController : Controller
+    public class DriverController : Controller
     {
         private readonly IOrdersService _orderService;
 
-        public OrdersController(IOrdersService orderService)
+        public DriverController(IOrdersService orderService)
         {
             _orderService = orderService;
         }

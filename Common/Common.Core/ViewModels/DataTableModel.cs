@@ -17,7 +17,12 @@ namespace Common.Core.ViewModels
         public int pageSize { get; set; }
         public int skip { get; set; }
         public string? Id { get; set; }
-        public string? Name { get; set; }
+        public string? OrderID { get; set; }
+        public string? TotalAmount { get; set; }
+        public string? OrderStatus { get; set; }
+        public string? FullName { get; set; }
+        public string? Mobile { get; set; }
+
         public DateTime? CreatedOn { get; set; }
     }
     public class DataTableResultModel

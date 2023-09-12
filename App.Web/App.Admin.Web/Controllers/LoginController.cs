@@ -27,7 +27,7 @@ namespace App.Admin.Web.Controllers
         {
             var model = new LoginVM();
 #if DEBUG
-            model.UserId = "vali";
+            model.UserId = "vali1";
 #endif
             return View(model);
         }

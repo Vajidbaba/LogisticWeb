@@ -1,15 +1,14 @@
-﻿<nav class="navbar  navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
+﻿<nav class="navbar top-row-header navbar-main navbar-expand-lg shadow-none bg-gray-100" id="navbarBlur" navbar-scroll="true">
     <div class="container-fluid py-1 ps-3 pe-0">
-       @* <nav aria-label="breadcrumb">
-            <h6 class="font-weight-bolder mb-0">Logistics</h6>
-        </nav>*@
+
         <div class="collapse navbar-collapse " id="navbar">
             <div class="navbar-nav d-flex ms-md-auto align-items-center justify-content-end">
                 <span class="me-2">Welcome,</span> <b>@User.FindFirst(System.Security.Claims.ClaimTypes.Name).Value</b>
             </div>
             <div class="power-btn" style="">
                 <a href="~/Login/SignOut">
-                <i class="fa fa-power-off text-danger"></i>
+                    <i class="ni ni-button-power text-danger"></i>
+
               </a>
             </div>
         </div>

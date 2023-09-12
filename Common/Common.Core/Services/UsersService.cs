@@ -48,6 +48,24 @@ namespace Common.Core.Services
                 throw;
             }
         }
+        public string GetUserCount()
+        {
+            try
+            {
+                var data = _dbcontext.Users.Count();
+                var result = data.ToString();
+
+                if (result != null)
+                {
+                    return result;
+                }
+                return "Not Found";
+            }
+            catch
+            {
+                throw;
+            }
+        }
         public int CreateUser(UsersModel entity)
         {
             try

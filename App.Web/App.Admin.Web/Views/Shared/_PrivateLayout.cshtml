@@ -10,12 +10,12 @@
     @await Html.PartialAsync("_Css")
 </head>
 
-<body class="g-sidenav-show  bg-gray-100">
+<body class="g-sidenav-show  bg-light">
     @await Html.PartialAsync("_LeftNav")
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         @await Html.PartialAsync("_Header")
-        <div class="container-fluid py-4">
-            <main role="main" class="pb-3">
+        <div class="container-fluid px-3 py-2">
+            <main role="main">
                 @RenderBody()
             </main>
         </div>

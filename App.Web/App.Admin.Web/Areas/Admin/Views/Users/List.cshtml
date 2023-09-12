@@ -3,28 +3,29 @@
 @{
     ViewData["Title"] = "Users";
 }
-<h6 class="font-weight-bolder va-title v-color">Users</h6>
 
-<div class="row">
-    <div class="col-12 ">
-        <a href="~/Admin/users/add" class="btn btn-sm v-bg-color text-white">
+<div class="row ">
+    <div class="col-md-6">
+        <h6 class="font-weight-bolder va-title v-color">Users</h6>
+    </div>
+    <div class="col-md-6 text-end">
+        <a href="~/Admin/users/add" class="btn btn-sm  v-bg-color text-white">
             <i class="fa fa-plus me-2 text-xs"></i>
             Add New User
         </a>
     </div>
 </div>
 
-<div class="pt-3">
     <div class="row">
         <div class="col-12">
-            <div class="card m-0">
-                <div class="card-header py-2 pb-0 ps-3 bg-light">
+            <div class="card m-0 rounded-2">
+                <div class="card-header py-2 pb-0 ps-3 bg-gray-100">
                     <h6 class="text-sm">User List</h6>
                 </div>
-                <div class="card-body  p-0">
+                <div class="card-body p-2">
                     <div class="table-responsive py-2">
                         <table id="tableUser" class="table w-100 align-items-center mb-0 table-striped dt-responsive nowrap">
-                            <thead >
+                            <thead>
                                 <tr>
                                     <th class="text-xs font-weight-bolder ps-4 v-color">Id</th>
                                     <th class="text-xs font-weight-bolder ps-2 v-color">Username</th>
@@ -97,7 +98,8 @@
                                             @if (@item.Active == true)
                                             {
                                                 <span class="badge badge-xss px-2 py-1 text-xxs text-capitalize bg-gradient-success">Active</span>
-                                            }else
+                                            }
+                                            else
                                             {
                                                 <span class="badge badge-sm text-xxs px-2 py-1 text-capitalize bg-gradient-secondary">InActive</span>
                                             }
@@ -123,7 +125,6 @@
         </div>
     </div>
 
-</div>
 
 @section Scripts {
     <script>
