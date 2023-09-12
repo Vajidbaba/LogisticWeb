@@ -21,9 +21,7 @@ namespace Common.Data.Context
         public virtual DbSet<Employee> Employees { get; set; } = null!;
         public virtual DbSet<Users> Users { get; set; } = null!;
         public virtual DbSet<Orders> Orders { get; set; } = null!;
-        public virtual DbSet<DriverMaster> DriverMaster { get; set; } = null!;
-
-
+        public virtual DbSet<DriverMaster> Drivers { get; set; } = null!;
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
