@@ -18,8 +18,8 @@ body {
 }
 
 .va-title {
-  margin-top: -65px;
-  margin-bottom: 20px;
+  /*margin-top: -65px;*/
+  /*margin-bottom: 20px;*/
 }
 
 div:where(.swal2-container) div:where(.swal2-popup) {
@@ -31,6 +31,7 @@ div:where(.swal2-container) div:where(.swal2-popup) {
 .card {
   box-shadow: 0 0 0.3125rem 0 rgb(0 0 0/12%) !important;
 }
+
 .card-header {
   border-radius: 12px 12px 0 0 !important;
 }
@@ -59,9 +60,11 @@ div:where(.swal2-container) div:where(.swal2-popup) {
 .table-striped > tbody > tr:nth-of-type(odd) > * {
   padding: 5px 8px !important;
 }
+
 .dataTables_wrapper .dataTables_filter {
   padding: 0 10px !important;
 }
+
   .dataTables_wrapper .dataTables_filter input {
     border-radius: 7px !important;
     padding: 3px !important;
@@ -82,6 +85,7 @@ table.dataTable > thead > tr > th, table.dataTable > thead > tr > td {
 .dataTables_wrapper.no-footer .dataTables_scrollBody {
   border-bottom: none !important;
 }
+
 .dataTables_wrapper .dataTables_info {
   clear: both;
   float: left;
@@ -90,6 +94,7 @@ table.dataTable > thead > tr > th, table.dataTable > thead > tr > td {
   font-size: 12px;
   font-weight: 600;
 }
+
 th {
   padding: 2px 0 4px 10px !important;
 }
@@ -115,4 +120,52 @@ td {
   border-color: #a085db !important;
   outline: 0;
   box-shadow: 0 0 0 0.9px #a085db !important;
+}
+
+.aside {
+  background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%) !important;
+}
+
+.top-row {
+  display: flex;
+  align-items: center !important;
+  height: 3.5rem !important;
+  justify-content: center;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.navbar-vertical .navbar-nav > .nav-item .nav-link.active {
+  color: white !important;
+  background-color: rgba(255,255,255,0.25) !important;
+  border-radius: 4px !important
+}
+
+.navbar-vertical .navbar-nav > .nav-item .nav-link:hover {
+  color: white !important;
+  background-color: rgba(255,255,255,0.1);
+  border-radius: 4px !important
+}
+
+.navbar-vertical.navbar-expand-xs .navbar-nav .nav-link {
+  color: #d7d7d7 !important;
+}
+
+.navbar-vertical.navbar-expand-xs .navbar-collapse {
+  height: calc(100vh - 220px) !important;
+  overflow:hidden !important;
+}
+
+.top-row-header {
+  border-bottom: 1px solid #d6d5d5;
+}
+
+.sidenav.fixed-start ~ .main-content {
+  margin-left: 15.71rem !important;
+}
+
+.btn {
+  width: max-content !important;
+  padding-left: 1rem !important;
+  text-transform:capitalize !important;
+  padding-right: 1rem !important;
 }
