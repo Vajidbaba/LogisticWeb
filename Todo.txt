@@ -1,116 +1,98 @@
 ALTER PROCEDURE [dbo].[spu_GetSearchLCTCheckListDataTable](
     @start INT,
     @length INT,
-    @SearchText VARCHAR(50),
-    @sortColumn INT,
-    @sortOrder VARCHAR(50),
-    @FROMDate DATE,
-    @ToDate DATE,
-    @ClaimNumber VARCHAR(30),
-    @IDHas VARCHAR(30),
-    @LccTpxUserId VARCHAR(30),
-    @SupervisorUsername VARCHAR(30),
-    @LCTLeadershipHandling VARCHAR(30),
-    @LogEntryType VARCHAR(30),
-    @SLPDEndDate DATE,
-    @TypeOfIssue VARCHAR(30),
-    @Resolution VARCHAR(30),
-    @K250Payment VARCHAR(30),
-    @SupLogSupportUnitReview VARCHAR(50),
-    @Status INT
+    @SearchText VARCHAR(50) = NULL,
+    @sortColumn INT = NULL,
+    @sortOrder VARCHAR(50) = NULL,
+    @FROMDate DATE = NULL,
+    @ToDate DATE = NULL,
+    @ClaimNumber VARCHAR(30) = NULL,
+    @IDHas VARCHAR(30) = NULL,
+    @LccTpxUserId VARCHAR(30) = NULL,
+    @SupervisorUsername VARCHAR(30) = NULL,
+    @LCTLeadershipHandling VARCHAR(30) = NULL,
+    @LogEntryType VARCHAR(30) = NULL,
+    @SLPDEndDate DATE = NULL,
+    @TypeOfIssue VARCHAR(30) = NULL,
+    @Resolution VARCHAR(30) = NULL,
+    @K250Payment VARCHAR(30) = NULL,
+    @SupLogSupportUnitReview VARCHAR(50) = NULL,
+    @Status INT = NULL
 )
 AS
 BEGIN
     SET NOCOUNT ON;
+    DECLARE @sql NVARCHAR(MAX);
+    DECLARE @params NVARCHAR(MAX);
 
+    SET @sql = N'
     SELECT 
-        ID,
-        Active,
-        CreatedOn,
-        ClaimNumber,
-        IDHas,
-        LccTpxUserId,
-        SupervisorUsername,
-        LCTLeadershipHandling,
-        TypeOfIssueOtherValue,
-        ISNULL(LogEntryType, '') AS LogEntryType,
-        SLPDEndDate,
-        ResolutionOtherValue,
-        K250PaymentOtherValue,
-        SuplogTypeOfIssue,
-        SupLogSupportUnitReview,
-        SupLogResolution,
-        SupLogK250Payment,
-        ISNULL(SuplogTypeOfIssue, '') + ISNULL(TypeOfIssueOtherValue, '') AS TypeOfIssue,
-        ISNULL(SupLogResolution, '') + ISNULL(ResolutionOtherValue, '') AS Resolution,
-        ISNULL(SupLogK250Payment, '') + ISNULL(K250PaymentOtherValue, '') AS K250Payment,
-        COUNT(*) OVER () AS TotalCount
+        *,
+        COUNT(*) OVER () AS TotalCount 
     FROM 
-        LCTCheckListSupLog AS L
-    WHERE 
-        L.Active = 1
-        AND (@Status IS NULL OR L.Status = @Status)
-        AND (
-            (@ClaimNumber = '' OR L.ClaimNumber LIKE '%' + @ClaimNumber + '%')
-            AND (@FROMDate IS NULL OR L.CreatedOn >= @FROMDate)
-            AND (@ToDate IS NULL OR L.CreatedOn < DATEADD(DAY, 1, @ToDate))
-            AND (@SearchText = '' 
-                OR L.ClaimNumber LIKE '%' + @SearchText + '%'
-                OR L.IDHas LIKE '%' + @SearchText + '%'
-                OR L.LccTpxUserId LIKE '%' + @SearchText + '%'
-                OR L.SupervisorUsername LIKE '%' + @SearchText + '%'
-                OR L.LCTLeadershipHandling LIKE '%' + @SearchText + '%'
-                OR L.TypeOfIssueOtherValue LIKE '%' + @SearchText + '%'
-                OR L.LogEntryType LIKE '%' + @SearchText + '%'
-                OR L.K250PaymentOtherValue LIKE '%' + @SearchText + '%'
-                OR EXISTS (
-                    SELECT 1 
-                    FROM LCTCheckListSupLogTypeOfIssue AS A 
-                    WHERE A.LCTCheckListId = L.id 
-                        AND A.Active = 1 
-                        AND A.Name LIKE '%' + @SearchText + '%'
-                )
-                OR EXISTS (
-                    SELECT 1 
-                    FROM LCTCheckListSupLogSupportUnitReview AS A 
-                    WHERE A.LCTCheckListId = L.id 
-                        AND A.Active = 1 
-                        AND A.Name LIKE '%' + @SearchText + '%'
-                )
-                OR EXISTS (
-                    SELECT 1 
-                    FROM LCTCheckListSupLogResolution AS A 
-                    WHERE A.LCTCheckListId = L.id 
-                        AND A.Active = 1 
-                        AND A.Name LIKE '%' + @SearchText + '%'
-                )
-                OR EXISTS (
-                    SELECT 1 
-                    FROM LCTCheckListSupLogK250Payment AS A 
-                    WHERE A.LCTCheckListId = L.id 
-                        AND A.Active = 1 
-                        AND A.Name LIKE '%' + @SearchText + '%'
-                )
-            )
-        )
-        AND (@SLPDEndDate IS NULL OR L.SLPDEndDate = @SLPDEndDate)
-        AND (@LogEntryType IS NULL OR L.LogEntryType = @LogEntryType)
-        AND (@SupervisorUsername = '' OR L.SupervisorUsername LIKE '%' + @SupervisorUsername + '%')
-        AND (@LCTLeadershipHandling = '' OR L.LCTLeadershipHandling LIKE '%' + @LCTLeadershipHandling + '%')
-        AND (
-            (@Resolution = 'blank' AND L.Resolution = '') 
-            OR (@Resolution IS NULL) 
-            OR (L.Resolution LIKE '%' + @Resolution + '%')
-        )
-        AND (
-            (@K250Payment = 'blank' AND L.K250PaymentOtherValue = '') 
-            OR (@K250Payment IS NULL) 
-            OR (L.K250PaymentOtherValue LIKE '%' + @K250Payment + '%')
-        )
-    ORDER BY 
-        ID DESC
-    OFFSET 
-        @start ROWS
-    FETCH NEXT 
-        @length ROWS ONLY;
+        (SELECT 
+            L.Id, 
+            L.Active, 
+            L.CreatedOn, 
+            L.ClaimNumber, 
+            L.IDHas, 
+            L.LccTpxUserId, 
+            L.SupervisorUsername, 
+            ISNULL(L.LCTLeadershipHandling, '''') AS LCTLeadershipHandling, 
+            ISNULL(L.TypeOfIssueOtherValue, '''') AS TypeOfIssueOtherValue, 
+            ISNULL(L.LogEntryType, '''') AS LogEntryType, 
+            L.SLPDEndDate, 
+            ISNULL(L.ResolutionOtherValue, '''') AS ResolutionOtherValue, 
+            ISNULL(L.K250PaymentOtherValue, '''') AS K250PaymentOtherValue, 
+            STUFF((SELECT DISTINCT '', '' + A.Name 
+                    FROM LCTCheckListSupLogTypeOfIssue A 
+                    WHERE A.LCTCheckListId = L.Id AND A.Active = 1 FOR XML PATH('''')), 1, 2, '''') AS SuplogTypeOfIssue, 
+            STUFF((SELECT DISTINCT '', '' + A.Name 
+                    FROM LCTCheckListSupLogSupportUnitReview A 
+                    WHERE A.LCTCheckListId = L.Id AND A.Active = 1 FOR XML PATH('''')), 1, 2, '''') AS SupLogSupportUnitReview, 
+            STUFF((SELECT DISTINCT '', '' + A.Name 
+                    FROM LCTCheckListSupLogResolution A 
+                    WHERE A.LCTCheckListId = L.Id AND A.Active = 1 FOR XML PATH('''')), 1, 2, '''') AS SupLogResolution, 
+            STUFF((SELECT DISTINCT '', '' + A.Name 
+                    FROM LCTCheckListSupLogK250Payment A 
+                    WHERE A.LCTCheckListId = L.Id AND A.Active = 1 FOR XML PATH('''')), 1, 2, '''') AS SupLogK250Payment 
+        FROM 
+            LCTCheckListSupLog L 
+        WHERE 
+            L.Active = 1';
+
+    IF @Status IS NOT NULL
+        SET @sql += ' AND L.Status = @Status';
+
+    IF @ClaimNumber IS NOT NULL
+        SET @sql += ' AND L.ClaimNumber LIKE ''%'' + @ClaimNumber + ''%''';
+
+    IF @FROMDate IS NOT NULL
+        SET @sql += ' AND L.CreatedOn >= @FromDate';
+
+    IF @ToDate IS NOT NULL
+        SET @sql += ' AND L.CreatedOn < DATEADD(DAY, 1, @ToDate)';
+
+    IF @SearchText IS NOT NULL AND @SearchText != ''
+        SET @sql += ' AND (
+                            L.ClaimNumber LIKE ''%'' + @SearchText + ''%'' 
+                            OR L.IDHas LIKE ''%'' + @SearchText + ''%'' 
+                            OR L.LccTpxUserId LIKE ''%'' + @SearchText + ''%'' 
+                            OR L.SupervisorUsername LIKE ''%'' + @SearchText + ''%'' 
+                            OR L.LCTLeadershipHandling LIKE ''%'' + @SearchText + ''%'' 
+                            OR L.TypeOfIssueOtherValue LIKE ''%'' + @SearchText + ''%'' 
+                            OR L.LogEntryType LIKE ''%'' + @SearchText + ''%'' 
+                            OR L.K250PaymentOtherValue LIKE ''%'' + @SearchText + ''%'')';
+
+    IF @SLPDEndDate IS NOT NULL
+        SET @sql += ' AND L.SLPDEndDate = @SLPDEndDate';
+
+    SET @sql += ' ) AS SubQuery';
+
+    SET @sql += ' ORDER BY ID DESC OFFSET @start ROWS FETCH NEXT @length ROWS ONLY';
+
+    SET @params = '@Status INT, @ClaimNumber VARCHAR(30), @FromDate DATE, @ToDate DATE, @SearchText VARCHAR(50), @SLPDEndDate DATE, @start INT, @length INT';
+
+    EXEC sp_executesql @sql, @params, 
+        @Status, @ClaimNumber, @FromDate, @ToDate, @SearchText, @SLPDEndDate, @start, @length;
 END
