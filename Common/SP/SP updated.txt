@@ -1,0 +1,135 @@
+ALTER PROCEDURE [dbo].[spu_GetSearchLCTCheckListDataTable]
+(
+    @start INT,
+    @length INT,
+    @SearchText VARCHAR(50),
+    @sortColumn INT,
+    @sortorder VARCHAR(50),
+    @FromDate VARCHAR(30),
+    @ToDate VARCHAR(30),
+    @ClaimNumber VARCHAR(30),
+    @IDHas VARCHAR(30),
+    @LccTpxUserId VARCHAR(30),
+    @SupervisorUsername VARCHAR(30),
+    @LCTLeadershipHandling VARCHAR(30),
+    @LogEntryType VARCHAR(30),
+    @SLPDEndDate VARCHAR(30),
+    @TypeOfIssue VARCHAR(30),
+    @Resolution VARCHAR(30),
+    @K250Payment VARCHAR(30),
+    @SupLogSupportUnitReview VARCHAR(50),
+    @Status INT
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    BEGIN TRY
+        -- Declare a table variable to store results
+        DECLARE @ResultTable TABLE
+        (
+            ID INT,
+            Active BIT,
+            CreatedOn DATETIME,
+            ClaimNumber VARCHAR(500),
+            IDHas VARCHAR(500),
+            LccTpxUserId VARCHAR(500),
+            SupervisorUsername VARCHAR(500),
+            LCTLeadershipHandling VARCHAR(500),
+            TypeOfIssue VARCHAR(MAX),
+            Resolution VARCHAR(MAX),
+            K250Payment VARCHAR(MAX)
+        );
+
+        -- Common Table Expression (CTE) for retrieving data
+        ;WITH CTE AS
+        (
+            SELECT
+                L.Active,
+                L.CreatedOn,
+                L.Id,
+                L.ClaimNumber,
+                L.IDHas,
+                L.LccTpxUserId,
+                L.SupervisorUsername,
+                L.LCTLeadershipHandling,
+                ISNULL(SLT.TypeOfIssueOtherValue, '') AS TypeOfIssue,
+                ISNULL(SLT.ResolutionOtherValue, '') AS Resolution,
+                ISNULL(SLT.K250PaymentOtherValue, '') AS K250Payment
+            FROM
+                LCTCheckListSupLog AS L
+            LEFT JOIN
+                YourOtherTable AS SLT ON L.ID = SLT.LogID -- Adjust this join according to your schema
+            WHERE
+                L.Active = 1
+                AND L.Status = @Status
+                AND (@ClaimNumber = '' OR L.ClaimNumber LIKE '%' + @ClaimNumber + '%')
+                AND (@FromDate = '' OR CAST(L.CreatedOn AS DATE) BETWEEN CAST(@FromDate AS DATE) AND CAST(@ToDate AS DATE))
+        )
+
+        -- Insert into the result table
+        INSERT INTO @ResultTable
+        (
+            ID,
+            Active,
+            CreatedOn,
+            ClaimNumber,
+            IDHas,
+            LccTpxUserId,
+            SupervisorUsername,
+            LCTLeadershipHandling,
+            TypeOfIssue,
+            Resolution,
+            K250Payment
+        )
+        SELECT
+            ID,
+            Active,
+            CreatedOn,
+            ClaimNumber,
+            IDHas,
+            LccTpxUserId,
+            SupervisorUsername,
+            LCTLeadershipHandling,
+            TypeOfIssue,
+            Resolution,
+            K250Payment
+        FROM
+            CTE;
+
+        -- Select total count for pagination
+        SELECT
+            COUNT(*) AS TotalCount
+        FROM
+            @ResultTable
+        WHERE
+            @SearchText = '' OR
+            (
+                K250Payment LIKE '%' + @SearchText + '%' OR
+                IDHas LIKE '%' + @SearchText + '%'
+            );
+
+        -- Select paginated results
+        SELECT
+            *
+        FROM
+            @ResultTable
+        WHERE
+            @SearchText = '' OR
+            (
+                K250Payment LIKE '%' + @SearchText + '%' OR
+                IDHas LIKE '%' + @SearchText + '%'
+            )
+        ORDER BY
+            ID DESC
+        OFFSET
+            @start ROWS
+        FETCH NEXT
+            @length ROWS ONLY;
+    END TRY
+    BEGIN CATCH
+        -- Error handling
+        SELECT 
+            ERROR_MESSAGE() AS ErrorMessage;
+    END CATCH;
+END
