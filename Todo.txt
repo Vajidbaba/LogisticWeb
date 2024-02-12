@@ -23,94 +23,89 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    CREATE TABLE #TempTable (
-        ID INT,
-        Active BIT,
-        CreatedOn DATETIME,
-        ClaimNumber VARCHAR(500),
-        IDHas VARCHAR(500),
-        LccTpxUserId VARCHAR(500),
-        SupervisorUsername VARCHAR(500),
-        LCTLeadershipHandling VARCHAR(500),
-        TypeOfIssueOtherValue VARCHAR(500),
-        LogEntryType VARCHAR(500),
-        SLPDEndDate DATE,
-        ResolutionOtherValue VARCHAR(500),
-        K250PaymentOtherValue VARCHAR(500),
-        SuplogTypeOfIssue VARCHAR(500),
-        SupLogSupportUnitReview VARCHAR(500),
-        SupLogResolution VARCHAR(500),
-        SupLogK250Payment VARCHAR(500),
-        TypeOfIssue VARCHAR(MAX),
-        Resolution VARCHAR(MAX),
-        K250Payment VARCHAR(MAX)
-    );
-
-    INSERT INTO #TempTable
-    SELECT
-        L.Active,
-        L.CreatedOn,
-        L.Id,
-        L.ClaimNumber,
-        L.IDHas,
-        L.LccTpxUserId,
-        L.SupervisorUsername,
-        ISNULL(L.LCTLeadershipHandling, '') AS LCTLeadershipHandling,
-        ISNULL(L.TypeOfIssueOtherValue, '') AS TypeOfIssueOtherValue,
-        L.LogEntryType,
-        L.SLPDEndDate,
-        ISNULL(L.ResolutionOtherValue, '') AS ResolutionOtherValue,
-        ISNULL(L.K250PaymentOtherValue, '') AS K250PaymentOtherValue,
-        STUFF((SELECT ', ' + A.Name FROM LCTCheckListSupLogTypeOfIssue AS A WHERE A.LCTCheckListId = L.id AND A.Active = 1 FOR XML PATH('')), 1, 2, '') AS SuplogTypeOfIssue,
-        STUFF((SELECT ', ' + A.Name FROM LCTCheckListSupLogSupportUnitReview AS A WHERE A.LCTCheckListId = L.id AND A.Active = 1 FOR XML PATH('')), 1, 2, '') AS SupLogSupportUnitReview,
-        STUFF((SELECT ', ' + A.Name FROM LCTCheckListSupLogResolution AS A WHERE A.LCTCheckListId = L.id AND A.Active = 1 FOR XML PATH('')), 1, 2, '') AS SupLogResolution,
-        STUFF((SELECT ', ' + A.Name FROM LCTCheckListSupLogK250Payment AS A WHERE A.LCTCheckListId = L.id AND A.Active = 1 FOR XML PATH('')), 1, 2, '') AS SupLogK250Payment,
+    SELECT 
+        ID,
+        Active,
+        CreatedOn,
+        ClaimNumber,
+        IDHas,
+        LccTpxUserId,
+        SupervisorUsername,
+        LCTLeadershipHandling,
+        TypeOfIssueOtherValue,
+        ISNULL(LogEntryType, '') AS LogEntryType,
+        SLPDEndDate,
+        ResolutionOtherValue,
+        K250PaymentOtherValue,
+        SuplogTypeOfIssue,
+        SupLogSupportUnitReview,
+        SupLogResolution,
+        SupLogK250Payment,
         ISNULL(SuplogTypeOfIssue, '') + ISNULL(TypeOfIssueOtherValue, '') AS TypeOfIssue,
         ISNULL(SupLogResolution, '') + ISNULL(ResolutionOtherValue, '') AS Resolution,
-        ISNULL(SupLogK250Payment, '') + ISNULL(K250PaymentOtherValue, '') AS K250Payment
-    FROM
-        LCTCheckListSupLog AS L
-    WHERE
-        L.Active = 1
-        AND L.Status = @Status
-        AND (@ClaimNumber = '' OR L.ClaimNumber LIKE '%' + @ClaimNumber + '%')
-        AND ((@FROMDate IS NULL OR @ToDate IS NULL) OR (L.CreatedOn BETWEEN @FROMDate AND @ToDate));
-
-    SELECT 
-        *,
-        COUNT(Id) OVER () AS TotalCount 
+        ISNULL(SupLogK250Payment, '') + ISNULL(K250PaymentOtherValue, '') AS K250Payment,
+        COUNT(*) OVER () AS TotalCount
     FROM 
-        #TempTable
+        LCTCheckListSupLog AS L
     WHERE 
-        (
-            @SearchText = '' OR
-            (
-                K250PaymentOtherValue LIKE '%' + @SearchText + '%' OR
-                IDHas LIKE '%' + @SearchText + '%' OR
-                LccTpxUserId LIKE '%' + @SearchText + '%' OR
-                SupervisorUsername LIKE '%' + @SearchText + '%' OR
-                LCTLeadershipHandling LIKE '%' + @SearchText + '%' OR
-                TypeOfIssueOtherValue LIKE '%' + @SearchText + '%' OR
-                LogEntryType LIKE '%' + @SearchText + '%' OR
-                ClaimNumber LIKE '%' + @SearchText + '%' OR
-                TypeOfIssue LIKE '%' + @SearchText + '%' OR
-                Resolution LIKE '%' + @SearchText + '%' OR
-                K250Payment LIKE '%' + @SearchText + '%'
+        L.Active = 1
+        AND (@Status IS NULL OR L.Status = @Status)
+        AND (
+            (@ClaimNumber = '' OR L.ClaimNumber LIKE '%' + @ClaimNumber + '%')
+            AND (@FROMDate IS NULL OR L.CreatedOn >= @FROMDate)
+            AND (@ToDate IS NULL OR L.CreatedOn < DATEADD(DAY, 1, @ToDate))
+            AND (@SearchText = '' 
+                OR L.ClaimNumber LIKE '%' + @SearchText + '%'
+                OR L.IDHas LIKE '%' + @SearchText + '%'
+                OR L.LccTpxUserId LIKE '%' + @SearchText + '%'
+                OR L.SupervisorUsername LIKE '%' + @SearchText + '%'
+                OR L.LCTLeadershipHandling LIKE '%' + @SearchText + '%'
+                OR L.TypeOfIssueOtherValue LIKE '%' + @SearchText + '%'
+                OR L.LogEntryType LIKE '%' + @SearchText + '%'
+                OR L.K250PaymentOtherValue LIKE '%' + @SearchText + '%'
+                OR EXISTS (
+                    SELECT 1 
+                    FROM LCTCheckListSupLogTypeOfIssue AS A 
+                    WHERE A.LCTCheckListId = L.id 
+                        AND A.Active = 1 
+                        AND A.Name LIKE '%' + @SearchText + '%'
+                )
+                OR EXISTS (
+                    SELECT 1 
+                    FROM LCTCheckListSupLogSupportUnitReview AS A 
+                    WHERE A.LCTCheckListId = L.id 
+                        AND A.Active = 1 
+                        AND A.Name LIKE '%' + @SearchText + '%'
+                )
+                OR EXISTS (
+                    SELECT 1 
+                    FROM LCTCheckListSupLogResolution AS A 
+                    WHERE A.LCTCheckListId = L.id 
+                        AND A.Active = 1 
+                        AND A.Name LIKE '%' + @SearchText + '%'
+                )
+                OR EXISTS (
+                    SELECT 1 
+                    FROM LCTCheckListSupLogK250Payment AS A 
+                    WHERE A.LCTCheckListId = L.id 
+                        AND A.Active = 1 
+                        AND A.Name LIKE '%' + @SearchText + '%'
+                )
             )
         )
-        AND (@SLPDEndDate IS NULL OR SLPDEndDate = @SLPDEndDate)
-        AND (@LogEntryType IS NULL OR LogEntryType = @LogEntryType)
-        AND (@SupervisorUsername IS NULL OR SupervisorUsername LIKE '%' + @SupervisorUsername + '%')
-        AND (@LCTLeadershipHandling IS NULL OR LCTLeadershipHandling LIKE '%' + @LCTLeadershipHandling + '%')
+        AND (@SLPDEndDate IS NULL OR L.SLPDEndDate = @SLPDEndDate)
+        AND (@LogEntryType IS NULL OR L.LogEntryType = @LogEntryType)
+        AND (@SupervisorUsername = '' OR L.SupervisorUsername LIKE '%' + @SupervisorUsername + '%')
+        AND (@LCTLeadershipHandling = '' OR L.LCTLeadershipHandling LIKE '%' + @LCTLeadershipHandling + '%')
         AND (
-            (@Resolution = 'blank' AND Resolution = '') OR 
-            (@Resolution IS NULL) OR 
-            (Resolution LIKE '%' + @Resolution + '%')
+            (@Resolution = 'blank' AND L.Resolution = '') 
+            OR (@Resolution IS NULL) 
+            OR (L.Resolution LIKE '%' + @Resolution + '%')
         )
         AND (
-            (@K250Payment = 'blank' AND K250Payment = '') OR 
-            (@K250Payment IS NULL) OR 
-            (K250Payment LIKE '%' + @K250Payment + '%')
+            (@K250Payment = 'blank' AND L.K250PaymentOtherValue = '') 
+            OR (@K250Payment IS NULL) 
+            OR (L.K250PaymentOtherValue LIKE '%' + @K250Payment + '%')
         )
     ORDER BY 
         ID DESC
@@ -118,6 +113,4 @@ BEGIN
         @start ROWS
     FETCH NEXT 
         @length ROWS ONLY;
-
-    DROP TABLE #TempTable;
 END
