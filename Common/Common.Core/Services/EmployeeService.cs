@@ -31,7 +31,6 @@ namespace Common.Core.Services
             }
         }
 
-
         //public List<LCTCheckListSubLogFailedMailModel> GetLCTDashboardFailedMailProcedure()
         //{
         //    var resultList = new List<LCTCheckListSubLogFailedMailModel>();
@@ -39,33 +38,34 @@ namespace Common.Core.Services
         //    {
         //        var connectionString = _config.GetConnectionString("AppConnection");
         //        using (var connection = new SqlConnection(connectionString))
-        //        using (var command = connection.CreateCommand())
         //        {
-        //            command.CommandText = "GetLCTCheckListFailedMail";
-        //            command.CommandType = CommandType.StoredProcedure;
-
         //            connection.Open();
-
-        //            using (var reader = command.ExecuteReader())
+        //            using (var command = connection.CreateCommand())
         //            {
-        //                while (reader.Read())
+        //                command.CommandText = "GetLCTCheckListFailedMail";
+        //                command.CommandType = CommandType.StoredProcedure;
+
+        //                using (var reader = command.ExecuteReader())
         //                {
-        //                    var obj = new LCTCheckListSubLogFailedMailModel();
+        //                    while (reader.Read())
+        //                    {
+        //                        var obj = new LCTCheckListSubLogFailedMailModel();
 
-        //                    obj.Id = reader["Id"] == DBNull.Value ? 0 : (int)reader["Id"];
-        //                    obj.ClaimNumber = reader["ClaimNumber"] == DBNull.Value ? string.Empty : (string)reader["ClaimNumber"];
-        //                    obj.CreatedOn = (DateTime)reader["CreatedOn"];
-        //                    obj.CreatedBy = reader["CreatedBy"] == DBNull.Value ? string.Empty : (string)reader["CreatedBy"];
-        //                    obj.UpdatedBy = reader["UpdatedBy"] == DBNull.Value ? string.Empty : (string)reader["UpdatedBy"];
-        //                    obj.SupervisorUsername = reader["SupervisorUsername"] == DBNull.Value ? string.Empty : (string)reader["SupervisorUsername"];
-        //                    obj.LCTLeadershipHandling = reader["LCTLeadershipHandling"] == DBNull.Value ? string.Empty : (string)reader["LCTLeadershipHandling"];
-        //                    obj.LogEntryType = reader["LogEntryType"] == DBNull.Value ? string.Empty : (string)reader["LogEntryType"];
-        //                    obj.Resolution = reader["SupLogResolution"] == DBNull.Value ? string.Empty : (string)reader["SupLogResolution"];
-        //                    obj.ResolutionOtherValue = reader["ResolutionOtherValue"] == DBNull.Value ? string.Empty : (string)reader["ResolutionOtherValue"];
-        //                    obj.K250Payment = reader["SupLogK250Payment"] == DBNull.Value ? string.Empty : (string)reader["SupLogK250Payment"];
-        //                    obj.K250PaymentOtherValue = reader["K250PaymentOtherValue"] == DBNull.Value ? string.Empty : (string)reader["K250PaymentOtherValue"];
+        //                        obj.Id = reader["Id"] == DBNull.Value ? 0 : (int)reader["Id"];
+        //                        obj.ClaimNumber = reader["ClaimNumber"] == DBNull.Value ? string.Empty : (string)reader["ClaimNumber"];
+        //                        obj.CreatedOn = (DateTime)reader["CreatedOn"];
+        //                        obj.CreatedBy = reader["CreatedBy"] == DBNull.Value ? string.Empty : (string)reader["CreatedBy"];
+        //                        obj.UpdatedBy = reader["UpdatedBy"] == DBNull.Value ? string.Empty : (string)reader["UpdatedBy"];
+        //                        obj.SupervisorUsername = reader["SupervisorUsername"] == DBNull.Value ? string.Empty : (string)reader["SupervisorUsername"];
+        //                        obj.LCTLeadershipHandling = reader["LCTLeadershipHandling"] == DBNull.Value ? string.Empty : (string)reader["LCTLeadershipHandling"];
+        //                        obj.LogEntryType = reader["LogEntryType"] == DBNull.Value ? string.Empty : (string)reader["LogEntryType"];
+        //                        obj.Resolution = reader["SupLogResolution"] == DBNull.Value ? string.Empty : (string)reader["SupLogResolution"];
+        //                        obj.ResolutionOtherValue = reader["ResolutionOtherValue"] == DBNull.Value ? string.Empty : (string)reader["ResolutionOtherValue"];
+        //                        obj.K250Payment = reader["SupLogK250Payment"] == DBNull.Value ? string.Empty : (string)reader["SupLogK250Payment"];
+        //                        obj.K250PaymentOtherValue = reader["K250PaymentOtherValue"] == DBNull.Value ? string.Empty : (string)reader["K250PaymentOtherValue"];
 
-        //                    resultList.Add(obj);
+        //                        resultList.Add(obj);
+        //                    }
         //                }
         //            }
         //        }
@@ -76,6 +76,7 @@ namespace Common.Core.Services
         //    }
         //    return resultList;
         //}
+
 
     }
 }
