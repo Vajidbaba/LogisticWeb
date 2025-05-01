@@ -27,7 +27,7 @@ namespace App.Admin.Web.Controllers
         {
             var model = new LoginVM();
 #if DEBUG
-            model.UserId = "vali";
+            model.UserId = "USR001";
 #endif
             return View(model);
         }
@@ -55,7 +55,7 @@ namespace App.Admin.Web.Controllers
                 Toast("Please enter user Id", ToastType.ERROR);
                 return View(model);
             }
-            if (!userInfo.Active)
+            if (!userInfo.isActive)
             {
                 Toast("In Active", ToastType.ERROR);
                 return View(model);

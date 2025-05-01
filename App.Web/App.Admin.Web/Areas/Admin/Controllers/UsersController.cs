@@ -40,32 +40,30 @@ namespace App.Admin.Web.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Create(UsersModel user)
         {
-            UsersModel data = new UsersModel();
-            if (data != null)
+            if (user.Username != null && user.Password != null && user.Role != null)
             {
-                if (user.Username != null)
-                {
-                    var getLastId = _userService.GetLastUsersId();
-                    string inputString = user.Username;
-                    char firstLetter = inputString[0];
-                    string inputStrings = user.Username;
-                    string[] words = inputStrings.Split(' ');
-                    string lastWord = words[words.Length - 1];
+                var getLastId = _userService.GetUserCount();
+                int nextId = getLastId + 1;
 
-                    data.Active = true;
-                    data.UserId = firstLetter.ToString().ToLower() + lastWord.ToLower() + getLastId;
-                    data.Username = user.Username;
-                    data.Mobile = user.Mobile;
-                    data.Password = user.Password;
-                    data.Role = user.Role;
-                    _userService.CreateUser(data);
-                }
+                UsersModel data = new UsersModel
+                {
+                    isActive = true,
+                    UserId = "USR" + nextId.ToString("D4"),
+                    Username = user.Username,
+                    Password = user.Password,
+                    Role = user.Role
+                };
+
+                _userService.CreateUser(data);
+
                 Toast("User created successfully!", ToastType.SUCCESS);
                 return RedirectToAction("List", "Users");
             }
+
             Toast("Please enter all fields", ToastType.ERROR);
             return RedirectToAction("List", "Users");
         }
+
 
         [HttpGet]
         public IActionResult Update(int? Id)
@@ -89,7 +87,7 @@ namespace App.Admin.Web.Areas.Admin.Controllers
             {
                 var data = new UsersModel();
                 data.Id = user.Id;
-                data.Active = user.Active;
+                data.isActive = user.isActive;
                 data.Username = user.Username;
                 data.Mobile = user.Mobile;
                 data.Password = user.Password;

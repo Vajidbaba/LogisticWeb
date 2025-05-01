@@ -11,9 +11,9 @@ namespace Common.Data.Models
     {
         [Key]
         public int Id { get; set; } 
-        public bool Active { get; set; }
-        public DateTime? CreatedOn { get; set; } = DateTime.Now;
-        public string? CreatedBy { get; set; }
+        public bool isActive { get; set; }
+        public DateTime? AddedOn { get; set; } = DateTime.Now;
+        public string? AddedBy { get; set; }
         public DateTime? UpdatedOn { get; set; }= DateTime.Now;
         public string? UpdatedBy { get; set; }
 

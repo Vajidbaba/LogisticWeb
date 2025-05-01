@@ -11,15 +11,15 @@ namespace App.Admin.Web.Areas.Admin.Controllers
 
     public class DashboardController : Controller
     {
-        private readonly IEmployeeService _employeeService;
-        public DashboardController(IEmployeeService employeeService)
+        private readonly IUsersService _usersService;
+        public DashboardController(IUsersService usersService)
         {
-            _employeeService = employeeService;
+            _usersService = usersService;
         }
         public async Task<IActionResult> List()
         {
-            List<Employee> listEmployees = await _employeeService.GetEmployees();
-            return View(listEmployees);
+            var users = await _usersService.GetAllUsers();  
+            return View(users);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Common.Core.Services.Contracts
     public interface IUsersService
     {
         Task<List<Users>> GetAllUsers();
-        string GetLastUsersId();
+        int GetUserCount();
         int CreateUser(UsersModel users);
         bool UpdateUser(int id, UsersModel users);
         Users GetUsersDetails(int? Id);

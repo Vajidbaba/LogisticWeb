@@ -29,7 +29,6 @@
                                     <th class="text-xs font-weight-bolder ps-4 v-color">Id</th>
                                     <th class="text-xs font-weight-bolder ps-2 v-color">Username</th>
                                     <th class="text-xs font-weight-bolder ps-2 v-color">User Id</th>
-                                    <th class="text-xs font-weight-bolder ps-2 v-color">Mobile</th>
                                     <th class="text-xs font-weight-bolder ps-2 v-color">Password</th>
                                     <th class="text-xs font-weight-bolder ps-2 v-color">Role</th>
                                     <th class="text-xs text-center font-weight-bolder ps-4 v-color">Status</th>
@@ -57,12 +56,6 @@
                                                 @Html.DisplayFor(modelItem => item.UserId)
 
                                             </h6>
-                                        </td>
-                                        <td>
-                                            <p class="text-xs font-weight-bold mb-0">
-                                                @Html.DisplayFor(modelItem => item.Mobile)
-
-                                            </p>
                                         </td>
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0">
@@ -94,7 +87,7 @@
                                             </p>
                                         </td>
                                         <td class="text-center">
-                                            @if (@item.Active == true)
+                                            @if (@item.isActive == true)
                                             {
                                                 <span class="badge badge-xss px-2 py-1 text-xxs text-capitalize bg-gradient-success">Active</span>
                                             }else

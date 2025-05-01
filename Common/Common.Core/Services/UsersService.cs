@@ -30,38 +30,38 @@ namespace Common.Core.Services
                 throw;
             }
         }
-        public string GetLastUsersId()
+        public int GetUserCount()
         {
             try
             {
-                var data = _dbcontext.Users.OrderBy(u => u.Id).LastOrDefault()?.Id;
-                var result = data.ToString();
+                var lastUser = _dbcontext.Users.OrderByDescending(u => u.Id).FirstOrDefault();
 
-                if (result != null)
+                if (lastUser != null)
                 {
-                    return result;
+                    return lastUser.Id;
                 }
-                return "Not Found";
+
+                return 0;
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                throw new Exception("Error fetching last user ID", ex);
             }
         }
+
         public int CreateUser(UsersModel entity)
         {
             try
             {
                 var userId = _contextHelper.GetUsername();
                 Users logistic = new Users();
-                logistic.Active = true;
-                logistic.CreatedBy = userId;
-                logistic.CreatedOn = DateTime.Now;
+                logistic.isActive = true;
+                logistic.AddedBy = userId;
+                logistic.AddedOn = DateTime.Now;
                 logistic.UpdatedBy = userId;
                 logistic.UpdatedOn = DateTime.Now;
                 logistic.Username = entity.Username;
                 logistic.UserId = entity.UserId;
-                logistic.Mobile = entity.Mobile;
                 logistic.Password = entity.Password;
                 logistic.Role = entity.Role;
                 _dbcontext.Users.Add(logistic);
@@ -85,9 +85,8 @@ namespace Common.Core.Services
                 }
                 entity.UpdatedBy = userId;
                 entity.UpdatedOn = DateTime.Now;
-                entity.Active = model.Active;
+                entity.isActive = model.isActive;
                 entity.Username = model.Username;
-                entity.Mobile = model.Mobile;
                 entity.Password = model.Password;
                 entity.Role = model.Role;
                 _dbcontext.Update(entity);
@@ -109,9 +108,8 @@ namespace Common.Core.Services
                 foreach (var user in data)
                 {
                     result.Id = user.Id;
-                    result.Active = user.Active;
+                    result.isActive = user.isActive;
                     result.Username = user.Username;
-                    result.Mobile = user.Mobile;
                     result.Password = user.Password;
                     result.Role = user.Role;
                     _dbcontext.Add(result);
