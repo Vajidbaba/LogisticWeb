@@ -18,4 +18,5 @@ namespace Common.Data.Models
         public string? UpdatedBy { get; set; }
 
     }
+
 }
