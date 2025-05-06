@@ -1,0 +1,35 @@
+﻿@model List<Common.Data.Models.AttendanceModel>
+
+<h2>Attendance Records</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Employee ID</th>
+            <th>Date</th>
+            <th>Check-In</th>
+            <th>Check-Out</th>
+            <th>Work Hours</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var record in Model)
+        {
+            <tr>
+                <td>@record.Id</td>
+                <td>@record.EmployeeId</td>
+                <td>@record.Date.ToShortDateString()</td>
+                <td>@record.CheckInTime</td>
+                <td>@record.CheckOutTime</td>
+                <td>@record.WorkHours</td>
+                <td>@record.Status</td>
+                <td>
+                    <a href="@Url.Action("AddOrUpdate", "Attendance", new { Id = record.Id })" class="btn btn-warning">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a href="@Url.Action("AddOrUpdate", "Attendance")" class="btn btn-success">Add Attendance</a>

@@ -1,9 +1,11 @@
 using Common.Core.Services;
 using Common.Data.Context;
+using Common.Data.Models;
 using Common.Data.Repositories;
 using Common.Data.Repositories.Contracts;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using static Common.Core.Services.IEmployeeService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +27,10 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IUsersService, UsresService>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<IAttendanceService, AttendanceService>();
+builder.Services.AddScoped<ISalaryService, SalaryService>();
+builder.Services.AddScoped<ILeaveService, LeaveService>();
 builder.Services.AddSingleton<IContextHelper, ContextHelper>();
 
 

@@ -6,6 +6,8 @@ namespace Common.Data.Models
 {
     public class Users : BaseModel
     {
+        public int Id { get; set; }
+
         [Required(ErrorMessage = "Username is required")]
         public string? Username { get; set; }
         [Required(ErrorMessage = "UserId required")]

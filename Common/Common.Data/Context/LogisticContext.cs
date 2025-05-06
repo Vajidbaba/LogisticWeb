@@ -16,6 +16,14 @@ namespace Common.Data.Context
         }
 
         public virtual DbSet<Users> Users { get; set; } = null!;
+        public DbSet<EmployeeModel> Employees { get; set; }
+        public DbSet<AttendanceModel> Attendance { get; set; }
+        public DbSet<LeaveRequests> LeaveRequests { get; set; }
+
+        public DbSet<SalaryModel> Salary { get; set; }
+
+
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
