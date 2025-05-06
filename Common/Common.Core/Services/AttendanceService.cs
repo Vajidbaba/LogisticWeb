@@ -72,8 +72,7 @@ namespace Common.Core.Services
         }
         public async Task<Attendance> GetAttendanceByIdAsync(int id)
         {
-            var attendance = await _context.Attendance
-                                           .Where(a => a.Id == id && a.isActive == true)
+            var attendance = await _context.Attendance.Where(a => a.Id == id && a.isActive == true)
                                            .FirstOrDefaultAsync();
             return attendance;  // This will return null if no record is found
         }

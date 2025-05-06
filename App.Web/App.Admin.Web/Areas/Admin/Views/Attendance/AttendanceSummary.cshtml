@@ -74,7 +74,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="hidden" id="AttendanceId" name="AttendanceId" />
+                    <!-- Hidden field for attendance ID -->
+                    <input type="hidden" id="AttendanceId" name="id" />  <!-- Changed "AttendanceId" to "id" to match method parameter -->
+
                     <div class="mb-3">
                         <label for="NewCheckOutTime" class="form-label">New Check-Out Time</label>
                         <input type="time" class="form-control" id="NewCheckOutTime" name="CheckOutTime" required />
@@ -98,7 +100,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="hidden" id="AttendanceIdUpdate" name="AttendanceId" />
+                    <input type="hidden" id="AttendanceIdUpdate" name="id" />
                     <div class="mb-3">
                         <label for="CheckInTime" class="form-label">Check-In Time</label>
                         <input type="time" class="form-control" id="CheckInTime" name="CheckInTime" required />
@@ -126,29 +128,30 @@
 
 @section Scripts {
     <script>
-        // Check if modals exist before adding event listeners
+        // Modal for updating Check-Out time
         const outTimeModal = document.getElementById('updateOutTimeModal');
         if (outTimeModal) {
             outTimeModal.addEventListener('show.bs.modal', function (event) {
-                const button = event.relatedTarget;
-                const attendanceId = button.getAttribute('data-attendance-id');
-                document.getElementById('AttendanceId').value = attendanceId;
+                const button = event.relatedTarget; // Button that triggered the modal
+                const attendanceId = button.getAttribute('data-attendance-id'); // Get the attendance id from the data-* attribute
+                document.getElementById('AttendanceId').value = attendanceId; // Set the hidden input field value
             });
         }
 
+        // Modal for updating full attendance (Check-In, Check-Out, and Status)
         const attendanceModal = document.getElementById('updateAttendanceModal');
         if (attendanceModal) {
             attendanceModal.addEventListener('show.bs.modal', function (event) {
-                const button = event.relatedTarget;
-                const attendanceId = button.getAttribute('data-attendance-id');
-                const checkInTime = button.getAttribute('data-checkin-time');
-                const checkOutTime = button.getAttribute('data-checkout-time');
-                const status = button.getAttribute('data-status');
+                const button = event.relatedTarget; // Button that triggered the modal
+                const attendanceId = button.getAttribute('data-attendance-id'); // Get the attendance id from the data-* attribute
+                const checkInTime = button.getAttribute('data-checkin-time'); // Get Check-In time
+                const checkOutTime = button.getAttribute('data-checkout-time'); // Get Check-Out time
+                const status = button.getAttribute('data-status'); // Get the status
 
-                document.getElementById('AttendanceIdUpdate').value = attendanceId;
-                document.getElementById('CheckInTime').value = checkInTime;
-                document.getElementById('CheckOutTime').value = checkOutTime;
-                document.getElementById('Status').value = status;
+                document.getElementById('AttendanceIdUpdate').value = attendanceId; // Set hidden field for ID
+                document.getElementById('CheckInTime').value = checkInTime; // Set Check-In time
+                document.getElementById('CheckOutTime').value = checkOutTime; // Set Check-Out time
+                document.getElementById('Status').value = status; // Set status
             });
         }
     </script>
