@@ -1,0 +1,86 @@
+﻿@model Common.Data.Models.EmployeeModel
+@{
+    ViewData["Title"] = "Add Employee";
+}
+<h6 class="font-weight-bolder v-color">@ViewData["Title"]</h6>
+
+
+
+
+<div class="card  rounded-2">
+    <div class="card-body"> 
+        <form role="form" asp-controller="Employee" asp-action="Add">
+            <input type="hidden" asp-for="UserId" class="form-control form-control-sm" placeholder="Mobile">
+            <input type="hidden" asp-for="Id" class="form-control form-control-sm" placeholder="Mobile">
+            <input type="hidden" asp-for="isActive" class="form-control form-control-sm">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="mb-1">Full Name</label>
+                    <div class="mb-2">
+                        <input type="text" asp-for="Name" class="form-control form-control-sm" placeholder="Full Name">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label class="mb-1">Gender</label>
+                    <div class="mb-2">
+                        <select class="form-select form-select-sm" asp-for="Gender" aria-label="Default select example">
+                            <option selected>--select--</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Others">Others</option>
+
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label class="mb-1">Mobile</label>
+                    <div class="mb-2">
+                        <input type="text" asp-for="Mobile" class="form-control form-control-sm" placeholder="Mobile">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label class="mb-1">
+                        Email</label>
+                    <div class="mb-2">
+                        <input type="text" asp-for="Email" class="form-control form-control-sm" placeholder="Email">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label class ="mb-1">State</label>
+                    <div class="mb-2">
+                        <input type="text" asp-for="State" class="form-control form-control-sm" placeholder="State">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label class="mb-1">City</label>
+                    <div class="mb-2">
+                        <input type="text" asp-for="City" class="form-control form-control-sm" placeholder="City">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label class="mb-1">Pin</label>
+                    <div class="mb-2">
+                        <input type="number" asp-for="PinCode" class="form-control form-control-sm" placeholder="Pin">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label class="mb-1">Address</label>
+                    <div class="mb-2">
+                        <input type="text" asp-for="Address" class="form-control form-control-sm" placeholder="Address">
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-md-12 text-end">
+                    <a href="~/admin/employee/list" class="btn btn-sm btn-dark">
+                        <i class="fa fa-arrow-left me-2 text-xs"></i>
+                        Back
+                    </a>
+                    <input type="submit" value="Save" class="btn bg-success text-white btn-sm">
+              </div>
+            </div>
+        </form>
+    </div>
+</div>
+

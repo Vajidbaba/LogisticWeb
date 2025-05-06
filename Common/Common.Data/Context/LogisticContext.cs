@@ -18,8 +18,12 @@ namespace Common.Data.Context
         {
         }
 
-        //public virtual DbSet<Employee> Employees { get; set; } = null!;
         public virtual DbSet<Users> Users { get; set; } = null!;
+        public virtual DbSet<EmployeeModel> EmployeeList { get; set; } = null!;
+        public DbSet<Employees> Employees { get; set; }
+        public DbSet<Attendance> Attendance { get; set; }
+        public DbSet<OvertimeRecord> OvertimeRecords { get; set; }
+        public DbSet<Salary> Salaries { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

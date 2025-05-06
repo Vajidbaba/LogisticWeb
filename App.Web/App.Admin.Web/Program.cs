@@ -5,6 +5,9 @@ using Common.Core.Services;
 using Common.Data.Repositories.Contracts;
 using Common.Data.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using static Common.Core.Services.IAttendanceService;
+using static Common.Core.Services.IOvertimeRecordService;
+using static Common.Core.Services.ISalaryService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,8 +29,13 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IUsersService, UsresService>();
-//builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddSingleton<IContextHelper, ContextHelper>();
+builder.Services.AddScoped<IEmployeeServices, EmployeeServices>();
+builder.Services.AddScoped<IAttendanceService, AttendanceService>();
+builder.Services.AddScoped<IOvertimeRecordService, OvertimeRecordService>();
+builder.Services.AddScoped<ISalaryService, SalaryService>();
+
 
 var app = builder.Build();
 

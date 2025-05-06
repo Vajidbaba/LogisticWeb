@@ -1,0 +1,175 @@
+﻿@model List<Common.Data.Models.Employees>
+
+@{
+    ViewData["Title"] = "Daily Attendance";
+}
+
+<h1>Daily Attendance</h1>
+
+<a asp-action="AttendanceSummary" asp-controller="Attendance">View Attendance Summary</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Employee ID</th>
+            <th>Employee Name</th>
+            <th>Department</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in Model)
+        {
+            <tr>
+                <td>@employee.Id</td>
+                <td>@employee.FullName</td>
+                <td>@employee.Department</td>
+                <td>
+                    <button type="button" class="btn btn-primary"
+                            data-bs-toggle="modal"
+                            data-bs-target="#addAttendanceModal"
+                            data-employee-id="@employee.Id"
+                            data-employee-name="@employee.FullName">
+                        Add Attendance
+                    </button>
+
+                    <!-- View Full Month Attendance -->
+                    <button type="button" class="btn btn-info"
+                            data-bs-toggle="modal"
+                            data-bs-target="#fullMonthAttendanceModal"
+                            data-employee-id="@employee.Id"
+                            data-employee-name="@employee.FullName">
+                        View Full Month Attendance
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Modal for Full Month Attendance -->
+<div class="modal fade" id="fullMonthAttendanceModal" tabindex="-1" aria-labelledby="fullMonthAttendanceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="fullMonthAttendanceModalLabel">Full Month Attendance for <span id="employeeName"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Attendance Table -->
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="monthAttendanceBody">
+                        <!-- Full Month Attendance Data will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for Adding Attendance -->
+<div class="modal fade" id="addAttendanceModal" tabindex="-1" aria-labelledby="addAttendanceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" asp-action="AddAttendance" id="addAttendanceForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addAttendanceModalLabel">Add Attendance</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="EmployeeId" name="EmployeeId" />
+                    <div class="mb-3">
+                        <label for="Date" class="form-label">Date</label>
+                        <input type="date" class="form-control" id="Date" name="Date" value="@DateTime.Today.ToString("yyyy-MM-dd")" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="CheckInTime" class="form-label">Check-In Time</label>
+                        <input type="time" class="form-control" id="CheckInTime" name="CheckInTime" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="CheckOutTime" class="form-label">Check-Out Time</label>
+                        <input type="time" class="form-control" id="CheckOutTime" name="CheckOutTime" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="Status" class="form-label">Status</label>
+                        <select class="form-select" id="Status" name="Status">
+                            <option value="Present">Present</option>
+                            <option value="Absent">Absent</option>
+                            <option value="Leave">Leave</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Add Attendance</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Trigger full month attendance modal
+            const fullMonthModal = document.getElementById('fullMonthAttendanceModal');
+            fullMonthModal.addEventListener('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var employeeId = button.data('employee-id');
+                var employeeName = button.data('employee-name');
+                $('#employeeName').text(employeeName);
+
+                getFullMonthAttendance(employeeId);
+            });
+
+            function getFullMonthAttendance(employeeId) {
+                var url = '@Url.Action("GetFullMonthAttendance", "Attendance", new { area = "Admin" })';
+                $.ajax({
+                    url: url,
+                    method: 'GET',
+                    data: { employeeId: employeeId },
+                    success: function (data) {
+                        var tbody = $('#monthAttendanceBody');
+                        tbody.empty();
+                        data.forEach(function (attendance) {
+                            var status = getAttendanceStatus(attendance.status);
+                            var row = `<tr>
+                                <td>${attendance.date}</td>
+                                <td>${status}</td>
+                            </tr>`;
+                            tbody.append(row);
+                        });
+                    }
+                });
+            }
+
+            function getAttendanceStatus(status) {
+                if (status === 'Present') {
+                    return '<span class="badge bg-success">Present</span>';
+                } else if (status === 'Absent') {
+                    return '<span class="badge bg-danger">Absent</span>';
+                } else if (status === 'Leave') {
+                    return '<span class="badge bg-warning">Leave</span>';
+                } else {
+                    return '<span class="badge bg-secondary">Not Recorded</span>';
+                }
+            }
+
+            // ✅ Trigger Add Attendance modal and set EmployeeId
+            const addAttendanceModal = document.getElementById('addAttendanceModal');
+            addAttendanceModal.addEventListener('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var employeeId = button.data('employee-id');
+                $('#EmployeeId').val(employeeId);
+            });
+        });
+    </script>
+}

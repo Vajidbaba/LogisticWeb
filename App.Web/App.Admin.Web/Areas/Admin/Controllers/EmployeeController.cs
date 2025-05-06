@@ -1,23 +1,28 @@
 ﻿using Common.Core.Services;
 using Common.Core.Services.Contracts;
+using Common.Core.ViewModels;
+using Common.Data.Context;
 using Common.Data.Models;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.EntityFrameworkCore;
+using System.Net;
+using System.Reflection;
+using System.Xml.Linq;
 
 namespace App.Admin.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-
-    public class DashboardController : BaseController
+    public class EmployeeController : BaseController
     {
-        private readonly IUsersService _usersService;
         private readonly IEmployeeService _employeeService;
+        private readonly IContextHelper _contextHelper;
+        private readonly LogisticContext _dbcontext;
 
-        public DashboardController(IUsersService usersService, IEmployeeService employeeService )
+        public EmployeeController(IEmployeeService employeeService, LogisticContext dbcontext, IContextHelper contextHelper)
         {
-            _usersService = usersService;
             _employeeService = employeeService;
-
+            _dbcontext = dbcontext;
+            _contextHelper = contextHelper;
         }
 
         public async Task<IActionResult> List(int? Id)

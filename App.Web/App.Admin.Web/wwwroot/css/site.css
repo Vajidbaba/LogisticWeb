@@ -28,9 +28,7 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   font-size: 0.8rem !important;
 }
 
-.card {
-  box-shadow: 0 0 0.3125rem 0 rgb(0 0 0/12%) !important;
-}
+
 
 .power-btn {
   background: #ffffff;
@@ -50,20 +48,4 @@ div:where(.swal2-container) div:where(.swal2-popup) {
 .v-color {
   color: #492596 !important;
 }
-.table-striped > tbody > tr:nth-of-type(odd) > * {
-  padding: 2px 0 4px 10px !important;
-}
-.table-striped > tbody > tr:nth-of-type(even) > * {
-  padding: 2px 0 4px 10px !important;
-  background: #fafafa !important;
-}
-th {
-  padding: 2px 0 4px 10px !important;
 
-}
-td {
-  border: 1px solid #fff !important;
-}
-.table {
-  border-collapse: collapse !important;
-}

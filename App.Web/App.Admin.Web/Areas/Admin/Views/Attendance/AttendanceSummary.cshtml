@@ -1,0 +1,155 @@
+﻿@model List<Common.Data.Models.Attendance>
+
+@{
+    ViewData["Title"] = "Attendance Summary";
+}
+
+<h2>@ViewData["Title"] (@DateTime.Today.ToString("dd-MMM-yyyy"))</h2>
+
+<!-- Date Picker to filter by specific date -->
+<form method="get" action="@Url.Action("AttendanceSummary")">
+    <div class="mb-3">
+        <label for="attendanceDate" class="form-label">Select Date</label>
+        <input type="date" id="attendanceDate" name="date" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+    </div>
+    <button type="submit" class="btn btn-primary">Filter</button>
+</form>
+
+<table class="table table-bordered mt-4">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Employee Name</th>
+            <th>Department</th>
+            <th>Check-In</th>
+            <th>Check-Out</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var record in Model)
+        {
+            <tr>
+                <td>@record.Date.ToString("dd-MMM-yyyy")</td>
+                <td>@record.Employee?.FullName</td>
+                <td>@record.Employee?.Department</td>
+                <td>@(record.CheckInTime?.ToString("hh:mm tt") ?? "–")</td>
+                <td>
+                    @(record.CheckOutTime?.ToString("hh:mm tt") ?? "–")
+                    @if (record.CheckOutTime == null)
+                    {
+                        <button type="button" class="btn btn-sm btn-warning mt-1"
+                                data-bs-toggle="modal"
+                                data-bs-target="#updateOutTimeModal"
+                                data-attendance-id="@record.Id">
+                            Update
+                        </button>
+                    }
+                    @if (record.CheckInTime != null && record.CheckOutTime != null)
+                    {
+                        <button type="button" class="btn btn-sm btn-info mt-1"
+                                data-bs-toggle="modal"
+                                data-bs-target="#updateAttendanceModal"
+                                data-attendance-id="@record.Id"
+                                data-checkin-time="@record.CheckInTime?.ToString("HH:mm")"
+                                data-checkout-time="@record.CheckOutTime?.ToString("HH:mm")"
+                                data-status="@record.Status">
+                            Update Attendance
+                        </button>
+                    }
+                </td>
+                <td>@record.Status</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Modal: Update Check-Out Time -->
+<div class="modal fade" id="updateOutTimeModal" tabindex="-1" aria-labelledby="updateOutTimeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form method="post" asp-action="UpdateOutTime">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Update Check-Out Time</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="AttendanceId" name="AttendanceId" />
+                    <div class="mb-3">
+                        <label for="NewCheckOutTime" class="form-label">New Check-Out Time</label>
+                        <input type="time" class="form-control" id="NewCheckOutTime" name="CheckOutTime" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal: Update Full Attendance -->
+<div class="modal fade" id="updateAttendanceModal" tabindex="-1" aria-labelledby="updateAttendanceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form method="post" asp-action="UpdateAttendance">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Update Attendance</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="AttendanceIdUpdate" name="AttendanceId" />
+                    <div class="mb-3">
+                        <label for="CheckInTime" class="form-label">Check-In Time</label>
+                        <input type="time" class="form-control" id="CheckInTime" name="CheckInTime" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="CheckOutTime" class="form-label">Check-Out Time</label>
+                        <input type="time" class="form-control" id="CheckOutTime" name="CheckOutTime" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="Status" class="form-label">Status</label>
+                        <select class="form-select" id="Status" name="Status">
+                            <option value="Present">Present</option>
+                            <option value="Absent">Absent</option>
+                            <option value="Leave">Leave</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Update Attendance</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Check if modals exist before adding event listeners
+        const outTimeModal = document.getElementById('updateOutTimeModal');
+        if (outTimeModal) {
+            outTimeModal.addEventListener('show.bs.modal', function (event) {
+                const button = event.relatedTarget;
+                const attendanceId = button.getAttribute('data-attendance-id');
+                document.getElementById('AttendanceId').value = attendanceId;
+            });
+        }
+
+        const attendanceModal = document.getElementById('updateAttendanceModal');
+        if (attendanceModal) {
+            attendanceModal.addEventListener('show.bs.modal', function (event) {
+                const button = event.relatedTarget;
+                const attendanceId = button.getAttribute('data-attendance-id');
+                const checkInTime = button.getAttribute('data-checkin-time');
+                const checkOutTime = button.getAttribute('data-checkout-time');
+                const status = button.getAttribute('data-status');
+
+                document.getElementById('AttendanceIdUpdate').value = attendanceId;
+                document.getElementById('CheckInTime').value = checkInTime;
+                document.getElementById('CheckOutTime').value = checkOutTime;
+                document.getElementById('Status').value = status;
+            });
+        }
+    </script>
+}
