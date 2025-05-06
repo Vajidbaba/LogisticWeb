@@ -1,11 +1,9 @@
-﻿using Common.Core.Services.Contracts;
-using Common.Core.ViewModels;
+﻿using Common.Core.ViewModels;
 using Common.Data.Context;
 using Common.Data.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Security.Claims;
 
 namespace App.Admin.Web.Controllers
@@ -27,7 +25,7 @@ namespace App.Admin.Web.Controllers
         {
             var model = new LoginVM();
 #if DEBUG
-            model.UserId = "U001";
+            model.UserId = "USR0002";
 #endif
             return View(model);
         }
@@ -44,7 +42,7 @@ namespace App.Admin.Web.Controllers
 
             try
             {
-                userInfo = _dbcontext.Users.Where(x => x.UserId == model.UserId && x.Password == model.Password).FirstOrDefault();
+                userInfo = _dbcontext.Users.Where(x => x.Active == true && x.UserId == model.UserId && x.Password == model.Password).FirstOrDefault();
             }
             catch (Exception)
             {
@@ -55,7 +53,7 @@ namespace App.Admin.Web.Controllers
                 Toast("Please enter user Id", ToastType.ERROR);
                 return View(model);
             }
-            if (!userInfo.isActive)
+            if (!userInfo.Active)
             {
                 Toast("In Active", ToastType.ERROR);
                 return View(model);
@@ -81,7 +79,7 @@ namespace App.Admin.Web.Controllers
             HttpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(claimIdentiy), authProperties);
-            return Redirect($"~/admin/dashboard/list");
+            return Redirect($"~/admin/users/list");
         }
 
         public IActionResult SignOut()

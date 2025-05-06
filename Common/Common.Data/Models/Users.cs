@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Common.Data.Models
 {
-    public class Users : BaseModels
+    public class Users : BaseModel
     {
         [Required(ErrorMessage = "Username is required")]
         public string? Username { get; set; }

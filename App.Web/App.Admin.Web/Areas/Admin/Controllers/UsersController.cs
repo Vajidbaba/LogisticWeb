@@ -1,10 +1,8 @@
-﻿using Common.Core.Services.Contracts;
-using Microsoft.AspNetCore.Mvc;
-using Common.Data.Models;
-using System.Diagnostics;
+﻿using Common.Core.Services;
 using Common.Core.ViewModels;
 using Common.Data.Context;
-using Microsoft.EntityFrameworkCore;
+using Common.Data.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace App.Admin.Web.Areas.Admin.Controllers
 {

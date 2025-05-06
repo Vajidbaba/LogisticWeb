@@ -1,13 +1,9 @@
-using Microsoft.EntityFrameworkCore;
-using Common.Data.Context;
-using Common.Core.Services.Contracts;
 using Common.Core.Services;
-using Common.Data.Repositories.Contracts;
+using Common.Data.Context;
 using Common.Data.Repositories;
+using Common.Data.Repositories.Contracts;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using static Common.Core.Services.IAttendanceService;
-using static Common.Core.Services.IOvertimeRecordService;
-using static Common.Core.Services.ISalaryService;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,12 +25,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IUsersService, UsresService>();
-builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddSingleton<IContextHelper, ContextHelper>();
-builder.Services.AddScoped<IEmployeeServices, EmployeeServices>();
-builder.Services.AddScoped<IAttendanceService, AttendanceService>();
-builder.Services.AddScoped<IOvertimeRecordService, OvertimeRecordService>();
-builder.Services.AddScoped<ISalaryService, SalaryService>();
+
 
 
 var app = builder.Build();

@@ -1,11 +1,19 @@
-﻿using Common.Core.Services.Contracts;
-using Common.Core.ViewModels;
+﻿using Common.Core.ViewModels;
 using Common.Data.Context;
 using Common.Data.Models;
 using Common.Data.Repositories.Contracts;
+using Microsoft.EntityFrameworkCore;
 
 namespace Common.Core.Services
 {
+    public interface IUsersService
+    {
+        Task<List<Users>> GetAllUsers();
+        int GetUserCount();
+        int CreateUser(UsersModel users);
+        bool UpdateUser(int id, UsersModel users);
+        Users GetUsersDetails(int? Id);
+    }
     public class UsresService : IUsersService
     {
         private readonly IGenericRepository<Users> _repository;
@@ -23,9 +31,11 @@ namespace Common.Core.Services
         {
             try
             {
-                return await _repository.GetAllUsers();
+                return await _dbcontext.Users
+                    .Where(x => x.Active)
+                    .ToListAsync(); 
             }
-            catch
+            catch (Exception ex)
             {
                 throw;
             }
@@ -55,7 +65,7 @@ namespace Common.Core.Services
             {
                 var userId = _contextHelper.GetUsername();
                 Users logistic = new Users();
-                logistic.isActive = true;
+                logistic.Active = true;
                 logistic.AddedBy = userId;
                 logistic.AddedOn = DateTime.Now;
                 logistic.UpdatedBy = userId;
@@ -85,7 +95,7 @@ namespace Common.Core.Services
                 }
                 entity.UpdatedBy = userId;
                 entity.UpdatedOn = DateTime.Now;
-                entity.isActive = model.isActive;
+                entity.Active = model.isActive;
                 entity.Username = model.Username;
                 entity.Password = model.Password;
                 entity.Role = model.Role;
@@ -108,7 +118,7 @@ namespace Common.Core.Services
                 foreach (var user in data)
                 {
                     result.Id = user.Id;
-                    result.isActive = user.isActive;
+                    result.Active = user.Active;
                     result.Username = user.Username;
                     result.Password = user.Password;
                     result.Role = user.Role;
