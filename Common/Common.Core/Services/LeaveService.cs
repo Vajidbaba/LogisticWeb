@@ -34,7 +34,6 @@ namespace Common.Core.Services
             return leaveRequests;
         }
 
-
         public async Task<LeaveRequests> GetLeaveRequestById(int id)
         {
             return await _dbcontext.LeaveRequests.FirstOrDefaultAsync(l => l.Id == id);
