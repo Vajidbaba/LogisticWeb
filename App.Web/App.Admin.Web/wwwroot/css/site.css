@@ -49,3 +49,6 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   color: #492596 !important;
 }
 
+.navbar-vertical.navbar-expand-xs .navbar-collapse {
+  height: auto !important;
+}

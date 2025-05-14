@@ -79,7 +79,7 @@ namespace App.Admin.Web.Controllers
             HttpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(claimIdentiy), authProperties);
-            return Redirect($"~/admin/users/list");
+            return Redirect($"~/admin/employees/list");
         }
 
         public IActionResult SignOut()

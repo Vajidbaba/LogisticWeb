@@ -1,8 +1,10 @@
 ﻿using Common.Core.Services;
+using Common.Core.ViewModels;
 using Common.Data.Context;
 using Common.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static Common.Core.Services.IEmployeeService;
 
 namespace App.Admin.Web.Areas.Admin.Controllers
 {
@@ -20,24 +22,57 @@ namespace App.Admin.Web.Areas.Admin.Controllers
 
         }
 
+        public IActionResult AddOrUpdate(int? id)
+        {
+            AttendanceModel model = id.HasValue? _attendanceService.GetAttendanceById(id.Value).Result: new AttendanceModel();
+
+            var today = DateTime.Today;
+
+            ViewBag.EmployeeList = id.HasValue ? _dbcontext.Employees.Select(e => new EmployeeModel { Id = e.Id, Name = e.Name }).ToList()
+                : _dbcontext.Employees.Where(e => !_dbcontext.Attendance.Any(a => a.EmployeeId == e.Id && a.Date == today))
+                    .Select(e => new EmployeeModel { Id = e.Id, Name = e.Name }).ToList();
+
+            return PartialView("_Add", model);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> GetAttendanceData()
+        {
+            try
+            {
+                var model = new DataTableModel();
+                model.draw = Request.Form["draw"].FirstOrDefault();
+                model.start = Request.Form["start"].FirstOrDefault();
+                model.length = Request.Form["length"].FirstOrDefault();
+                model.searchValue = Request.Form["search[value]"].FirstOrDefault();
+                model.sortColumn = "0";
+                model.sortColumnDirection = "desc";
+                model.StartDate = Request.Form["StartDate"].FirstOrDefault();
+                model.EndDate = Request.Form["EndDate"].FirstOrDefault();
+                model.pageSize = model.length != null ? Convert.ToInt32(model.length) : 0;
+                model.skip = model.start != null ? Convert.ToInt32(model.start) : 0;
+                model.Status = Request.Form["Status"].FirstOrDefault();
+                var result = _attendanceService.GetDataTable(model);
+                return Json(result);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+
+
         public async Task<IActionResult> List()
         {
             var records = await _attendanceService.GetAllAttendanceRecords();
             return View(records);
         }
 
-        [HttpGet]
-        public IActionResult AddOrUpdate(int? Id)
+        public async Task<IActionResult> Details()
         {
-            AttendanceModel model = Id.HasValue? _attendanceService.GetAttendanceById(Id.Value).Result
-                : new AttendanceModel();
-
-            // Populate employees for the dropdown
-            ViewBag.EmployeeList = _dbcontext.Employees
-       .Select(e => new EmployeeModel { Id = e.Id, Name = e.Name })
-       .ToList();
-
-            return View(model);
+            return View();
         }
 
 
